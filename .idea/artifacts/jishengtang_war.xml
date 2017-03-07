@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="jishengtang:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="jst-end.war">
+      <element id="artifact" artifact-name="jishengtang:war exploded" />
+    </root>
+  </artifact>
+</component>

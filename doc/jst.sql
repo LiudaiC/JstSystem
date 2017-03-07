@@ -1,0 +1,1 @@
+create jst_member ();
