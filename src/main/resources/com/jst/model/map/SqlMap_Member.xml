@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jst.web.dao.JstMemberDAO">
+    <resultMap id="member" type="">
+        <id property="id" column="id" javaType="java.lang.Long"/>
+        <result property="name" column="name" javaType="java.lang.String"/>
+        <result property="phone" column="phone" javaType="java.lang.String"/>
+        <result property="password" column="password" javaType="java.lang.String"/>
+        <result property="registerTime" column="register_time" javaType="java.sql.Timestamp"/>
+        <result property="updateTime" column="update_time" javaType="java.sql.Timestamp"/>
+    </resultMap>
+
+    <insert id="saveMember" parameterMap="member">
+      INSERT  INTO JST_MEMBER (
+          name,
+          phone,
+          password,
+          register_time,
+          update_time
+      ) VALUES (
+          #{name},
+          #{phone},
+          #{password},
+          #{registerTime},
+          #{updateTime}
+      );
+    <selectKey resultType="java.lang.Long" keyProperty="id">
+        SELECT LAST_INSERT_ID();
+    </selectKey>
+    </insert>
+
+    <select id="getMemberById" parameterType="java.lang.Long" resultMap="member">
+        SELECT * FROM JST_MEMBER WHERE id=#{id};
+    </select>
+
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+        <typeAlias type="member" alias="com.jst.web.model.JstMember"/>
+        <typeAlias type="product" alias="com.jst.web.model.JstProduct"/>
+        <typeAlias type="order" alias="com.jst.web.model.JstOrder"/>
+        <typeAlias type="employee" alias="com.jst.web.model.JstEmployee"/>
+        <typeAlias type="account" alias="com.jst.web.model.JstLoginAccount"/>
+    </typeAliases>
+
+    <mappers>
+        <mapper resource="com/jst/model/map/SqlMap_Member.xml"/>
+    </mappers>
+
+</configuration>

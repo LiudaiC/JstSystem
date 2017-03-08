@@ -1,15 +1,20 @@
 package com.jst.web.model;
 
+
+import java.sql.Timestamp;
+
 /**
  * Created by Stefan on 2017/3/1.
  */
 public class JstMember {
+
     private long id;
+
     private String name;
     private String phone;
     private String password;
-    private long registerTime;
-    private long updateTime;
+    private Timestamp registerTime;
+    private Timestamp updateTime;
 
     public long getId() {
         return id;
@@ -43,19 +48,19 @@ public class JstMember {
         this.password = password;
     }
 
-    public long getRegisterTime() {
+    public Timestamp getRegisterTime() {
         return registerTime;
     }
 
-    public void setRegisterTime(long registerTime) {
+    public void setRegisterTime(Timestamp registerTime) {
         this.registerTime = registerTime;
     }
 
-    public long getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(long updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 }

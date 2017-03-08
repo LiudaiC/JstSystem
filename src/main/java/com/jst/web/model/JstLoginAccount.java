@@ -3,7 +3,7 @@ package com.jst.web.model;
 /**
  * Created by Stefan on 2017/3/1.
  */
-public class JstAdmin {
+public class JstLoginAccount {
     private long id;
     // 员工账号
     private long empId;
