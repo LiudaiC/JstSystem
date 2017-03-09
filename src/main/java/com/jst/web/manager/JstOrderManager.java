@@ -3,8 +3,8 @@ package com.jst.web.manager;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Stefan on 2017/3/6.
+ * Created by Administrator on 2017/3/9.
  */
 @Component
-public class JstManager {
+public class JstOrderManager {
 }

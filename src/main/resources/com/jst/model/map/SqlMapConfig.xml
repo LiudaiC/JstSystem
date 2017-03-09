@@ -3,15 +3,10 @@
 <configuration>
 
     <typeAliases>
-        <typeAlias type="member" alias="com.jst.web.model.JstMember"/>
-        <typeAlias type="product" alias="com.jst.web.model.JstProduct"/>
-        <typeAlias type="order" alias="com.jst.web.model.JstOrder"/>
-        <typeAlias type="employee" alias="com.jst.web.model.JstEmployee"/>
-        <typeAlias type="account" alias="com.jst.web.model.JstLoginAccount"/>
+        <typeAlias alias="JstMember" type="com.jst.web.model.database.JstMember"/>
     </typeAliases>
-
     <mappers>
-        <mapper resource="com/jst/model/map/SqlMap_Member.xml"/>
+        <mapper resource="com/jst/model/map/SqlMap_Member.xml" />
     </mappers>
 
 </configuration>

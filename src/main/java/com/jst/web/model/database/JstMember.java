@@ -1,4 +1,4 @@
-package com.jst.web.model;
+package com.jst.web.model.database;
 
 
 import java.sql.Timestamp;

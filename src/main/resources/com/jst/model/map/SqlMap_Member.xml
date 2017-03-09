@@ -1,37 +1,46 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jst.web.dao.JstMemberDAO">
-    <resultMap id="member" type="">
-        <id property="id" column="id" javaType="java.lang.Long"/>
-        <result property="name" column="name" javaType="java.lang.String"/>
-        <result property="phone" column="phone" javaType="java.lang.String"/>
-        <result property="password" column="password" javaType="java.lang.String"/>
-        <result property="registerTime" column="register_time" javaType="java.sql.Timestamp"/>
-        <result property="updateTime" column="update_time" javaType="java.sql.Timestamp"/>
+
+    <resultMap type="com.jst.web.model.database.JstMember" id="memberMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone"/>
+        <result property="password" column="password"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
-    <insert id="saveMember" parameterMap="member">
-      INSERT  INTO JST_MEMBER (
-          name,
-          phone,
-          password,
-          register_time,
-          update_time
-      ) VALUES (
-          #{name},
-          #{phone},
-          #{password},
-          #{registerTime},
-          #{updateTime}
-      );
-    <selectKey resultType="java.lang.Long" keyProperty="id">
-        SELECT LAST_INSERT_ID();
-    </selectKey>
+    <insert id="saveMember" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstMember">
+        INSERT  INTO JST_MEMBER (
+            name,
+            phone,
+            password,
+            register_time,
+            update_time
+        ) VALUES (
+            #{name},
+            #{phone},
+            #{password},
+            #{registerTime},
+            #{updateTime}
+        );
     </insert>
 
-    <select id="getMemberById" parameterType="java.lang.Long" resultMap="member">
+    <update id="updateMember" parameterType="com.jst.web.model.database.JstMember">
+        UPDATE JST_MEMBER
+        SET name = #{name},
+            phone = #{phone},
+            password = #{password},
+            update_time = #{updateTime}
+    </update>
+
+    <select id="getMemberById" parameterType="java.lang.Long" resultMap="memberMap">
         SELECT * FROM JST_MEMBER WHERE id=#{id};
     </select>
 
+    <select id="getMemberIds" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id FROM JST_MEMBER WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
+    </select>
 
 </mapper>

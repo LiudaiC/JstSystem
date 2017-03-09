@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,9 +20,10 @@ import javax.sql.DataSource;
 /**
  * Created by Stefan on 2017/3/2.
  */
+@EnableAutoConfiguration
 @SpringBootApplication
-@MapperScan("com.jst.model.map")
 @ComponentScan
+@MapperScan("com.jst.web.dao")
 public class Application {
 
     @Bean
@@ -35,7 +37,7 @@ public class Application {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/com/jst/model/map/SqlMap_Member.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 

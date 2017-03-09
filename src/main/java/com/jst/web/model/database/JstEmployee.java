@@ -1,4 +1,4 @@
-package com.jst.web.model;
+package com.jst.web.model.database;
 
 /**
  * Created by Stefan on 2017/3/1.

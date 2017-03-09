@@ -1,4 +1,4 @@
-package com.jst.web.model;
+package com.jst.web.model.database;
 
 import java.math.BigDecimal;
 
@@ -7,14 +7,23 @@ import java.math.BigDecimal;
  */
 public class JstOrder {
 
+    // 订单id
     private long id;
+    // 产品id
     private long productId;
+    // 员工id
     private long employeeId;
+    // 原价
     private BigDecimal originalPrice;
+    // 优惠价
     private BigDecimal discountPrice;
+    // 实际支付价格
     private BigDecimal realPrice;
+    // 新增时间
     private long addTime;
+    // 修改时间
     private long updateTime;
+    // 订单备注
     private String remark;
 
     public long getId() {

@@ -1,7 +1,6 @@
 package com.jst.web.dao;
 
-import com.jst.web.model.JstMember;
-import org.springframework.transaction.annotation.Transactional;
+import com.jst.web.model.database.JstMember;
 
 /**
  * Created by Stefan on 2017/3/6.

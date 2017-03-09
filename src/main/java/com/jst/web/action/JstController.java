@@ -1,46 +1,43 @@
 package com.jst.web.action;
 
-import com.jst.web.dao.JstMemberDAO;
-import com.jst.web.model.JstMember;
+import com.jst.web.manager.JstMemberManager;
+import com.jst.web.model.database.JstMember;
+import com.jst.web.model.request.RequestMember;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.sql.Timestamp;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Stefan on 2017/3/1.
  */
-@Controller
-@RequestMapping("/jst")
+@RestController
 public class JstController {
 
     @Autowired
-    private JstMemberDAO memberDao;
+    private JstMemberManager memManager;
 
     @RequestMapping("/member/save")
-    @ResponseBody
-    public long helloWorld() {
-        JstMember member = new JstMember();
-        member.setName("test");
-        member.setPassword("123");
-        member.setPhone("13512345678");
-        long currTime = System.currentTimeMillis();
-        Timestamp stamp = new Timestamp(currTime);
-        member.setRegisterTime(stamp);
-        member.setUpdateTime(stamp);
-        return memberDao.saveMember(member);
+    public long saveMember(@RequestBody RequestMember requestMember) {
+        long genId = memManager.saveMember(requestMember);
+        return genId;
     }
 
     @RequestMapping("/member/{id}")
-    @ResponseBody
-    public JstMember getMember(long id) {
-        return memberDao.getMemberById(id);
+    public JstMember getMember(@PathVariable("id") long id) {
+        return memManager.getMember(id);
+    }
+
+    @RequestMapping("/product/save")
+    public long saveProduct(@RequestBody RequestMember requestMember) {
+        long genId = memManager.saveMember(requestMember);
+        return genId;
+    }
+
+    @RequestMapping("/product/{id}")
+    public JstMember getProduct(@PathVariable("id") long id) {
+        return memManager.getMember(id);
     }
 
     @RequestMapping("/login")
-    @ResponseBody
     public int login() {
         return 0;
     }
