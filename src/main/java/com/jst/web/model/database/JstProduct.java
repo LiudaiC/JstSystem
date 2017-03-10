@@ -1,6 +1,7 @@
 package com.jst.web.model.database;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 /**
  * Created by Stefan on 2017/3/1.
@@ -12,8 +13,8 @@ public class JstProduct {
     private BigDecimal originalPrice;
     private BigDecimal vipPrice;
     private BigDecimal discountPrice;
-    private long addTime;
-    private long updateTime;
+    private Timestamp addTime;
+    private Timestamp updateTime;
     private long opEmployee;
 
     public long getId() {
@@ -56,19 +57,19 @@ public class JstProduct {
         this.discountPrice = discountPrice;
     }
 
-    public long getAddTime() {
+    public Timestamp getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(long addTime) {
+    public void setAddTime(Timestamp addTime) {
         this.addTime = addTime;
     }
 
-    public long getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(long updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

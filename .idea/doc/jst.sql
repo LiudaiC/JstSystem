@@ -1,11 +1,11 @@
 DROP TABLE IF EXISTS jst_member;
 CREATE TABLE jst_member(
-  id BIGINT AUTO_INCREMENT PRIMARY KEY ,
-  phone VARCHAR(11) NOT NULL ,
-  name VARCHAR(30) NOT NULL ,
+  id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT ,
+  phone VARCHAR(11) NOT NULL  COMMENT '会员电话',
+  name VARCHAR(30) NOT NULL COMMENT '会员姓名',
   password VARCHAR(100) DEFAULT '123456',
-  register_time DATETIME DEFAULT now(),
-  update_time DATETIME DEFAULT now()
+  register_time DATETIME DEFAULT now() COMMENT '注册时间',
+  update_time DATETIME DEFAULT now() COMMENT '修改时间'
 ) ENGINE=Innodb CHARSET=UTF8 COMMENT '会员管理表';
 
 SELECT * FROM jst_member;

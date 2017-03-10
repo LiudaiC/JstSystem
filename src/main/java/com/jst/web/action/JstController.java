@@ -10,36 +10,18 @@ import org.springframework.web.bind.annotation.*;
  * Created by Stefan on 2017/3/1.
  */
 @RestController
+@RequestMapping("/jst")
 public class JstController {
-
-    @Autowired
-    private JstMemberManager memManager;
-
-    @RequestMapping("/member/save")
-    public long saveMember(@RequestBody RequestMember requestMember) {
-        long genId = memManager.saveMember(requestMember);
-        return genId;
-    }
-
-    @RequestMapping("/member/{id}")
-    public JstMember getMember(@PathVariable("id") long id) {
-        return memManager.getMember(id);
-    }
-
-    @RequestMapping("/product/save")
-    public long saveProduct(@RequestBody RequestMember requestMember) {
-        long genId = memManager.saveMember(requestMember);
-        return genId;
-    }
-
-    @RequestMapping("/product/{id}")
-    public JstMember getProduct(@PathVariable("id") long id) {
-        return memManager.getMember(id);
-    }
 
     @RequestMapping("/login")
     public int login() {
         return 0;
     }
+
+    @RequestMapping("/logout")
+    public int logout() {
+        return 0;
+    }
+
 
 }

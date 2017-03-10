@@ -1,5 +1,8 @@
 package com.jst.web.model.database;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 /**
  * Created by Stefan on 2017/3/1.
  */
@@ -22,11 +25,11 @@ public class JstEmployee {
     // 住址
     private String address;
     // 修改时间
-    private long updateTime;
+    private Timestamp updateTime;
     // 入职时间
-    private long joinTime;
+    private Timestamp joinTime;
     // 离职时间
-    private long dimissionTime;
+    private Timestamp dimissionTime;
 
     public long getId() {
         return id;
@@ -42,6 +45,10 @@ public class JstEmployee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public int getAdminRight() {
@@ -84,11 +91,11 @@ public class JstEmployee {
         this.address = address;
     }
 
-    public long getJoinTime() {
+    public Timestamp getJoinTime() {
         return joinTime;
     }
 
-    public void setJoinTime(long joinTime) {
+    public void setJoinTime(Timestamp joinTime) {
         this.joinTime = joinTime;
     }
 
@@ -96,19 +103,19 @@ public class JstEmployee {
         return gender;
     }
 
-    public long getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(long updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 
-    public long getDimissionTime() {
+    public Timestamp getDimissionTime() {
         return dimissionTime;
     }
 
-    public void setDimissionTime(long dimissionTime) {
+    public void setDimissionTime(Timestamp dimissionTime) {
         this.dimissionTime = dimissionTime;
     }
 }

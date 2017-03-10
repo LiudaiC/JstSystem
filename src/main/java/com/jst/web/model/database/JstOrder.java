@@ -1,6 +1,7 @@
 package com.jst.web.model.database;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 /**
  * Created by Stefan on 2017/3/7.
@@ -20,9 +21,9 @@ public class JstOrder {
     // 实际支付价格
     private BigDecimal realPrice;
     // 新增时间
-    private long addTime;
+    private Timestamp addTime;
     // 修改时间
-    private long updateTime;
+    private Timestamp updateTime;
     // 订单备注
     private String remark;
 
@@ -74,19 +75,19 @@ public class JstOrder {
         this.realPrice = realPrice;
     }
 
-    public long getAddTime() {
+    public Timestamp getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(long addTime) {
+    public void setAddTime(Timestamp addTime) {
         this.addTime = addTime;
     }
 
-    public long getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(long updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 
