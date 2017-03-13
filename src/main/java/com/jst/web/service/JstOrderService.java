@@ -5,6 +5,8 @@ import com.jst.web.model.database.JstOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/3/10.
  */
@@ -20,6 +22,18 @@ public class JstOrderService {
 
     public JstOrder getOrderById(long id) {
         return orderDAO.getOrderById(id);
+    }
+
+    public JstOrder getOrderByName(String name) {
+        return orderDAO.getOrderByName(name);
+    }
+
+    public List<Long> getOrderIds(int start, int num) {
+        return orderDAO.getOrderIds(start, num);
+    }
+
+    public int getOrderCount() {
+        return orderDAO.getOrderCount();
     }
 
 }

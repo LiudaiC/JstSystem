@@ -6,6 +6,8 @@ import com.jst.web.model.request.RequestProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/3/10.
  */
@@ -21,6 +23,18 @@ public class JstProductService {
 
     public JstProduct getProductById(long id) {
         return productDao.getProductById(id);
+    }
+
+    public JstProduct getProductByName(String name) {
+        return productDao.getProductByName(name);
+    }
+
+    public List<Long> getProductIds(int start, int num) {
+        return productDao.getProductIds(start, num);
+    }
+
+    public int getProductCount() {
+        return productDao.getProductCount();
     }
 
 

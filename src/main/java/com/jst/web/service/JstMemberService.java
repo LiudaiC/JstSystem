@@ -5,6 +5,8 @@ import com.jst.web.model.database.JstMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Stefan on 2017/3/6.
  */
@@ -21,4 +23,16 @@ public class JstMemberService {
     public JstMember getMemberById(long id) {
         return memberDao.getMemberById(id);
     };
+
+    public JstMember getMemberByName(String name) {
+        return memberDao.getMemberByName(name);
+    }
+
+    public List<Long> getMemberIds(int start, int num) {
+        return memberDao.getMemberIds(start, num);
+    }
+
+    public int getMemberCount() {
+        return memberDao.getMemberCount();
+    }
 }

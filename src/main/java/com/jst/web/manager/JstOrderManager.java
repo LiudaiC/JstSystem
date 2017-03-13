@@ -3,10 +3,15 @@ package com.jst.web.manager;
 import com.jst.web.model.database.JstOrder;
 import com.jst.web.model.request.RequestOrder;
 import com.jst.web.service.JstOrderService;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/9.
@@ -35,4 +40,23 @@ public class JstOrderManager {
     public JstOrder getOrderById (long id) {
         return orderService.getOrderById(id);
     }
+
+    public JstOrder getOrderByName(String name) {
+        return orderService.getOrderByName(name);
+    }
+
+    public Map<String, Object> getOrders(int page, int num) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("total", orderService.getOrderCount());
+        int start = (page - 1)*num;
+        List<Long> ids = orderService.getOrderIds(start, num);
+        List<JstOrder> products = new ArrayList<JstOrder>();
+        for (long id : ids) {
+            products.add(orderService.getOrderById(id));
+        }
+        map.put("list", products);
+        map.put("page", start);
+        return map;
+    }
+
 }

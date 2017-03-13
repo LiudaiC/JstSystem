@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Administrator on 2017/3/10.
  */
@@ -28,4 +31,18 @@ public class JstEmployeeController {
     public JstEmployee getEmployee(@PathVariable("id") long id){
         return employeeManager.getEmployeeById(id);
     }
+
+    @RequestMapping("/employee/{name}")
+    public JstEmployee getEmployee(@PathVariable("name") String name){
+        return employeeManager.getEmployeeByName(name);
+    }
+
+    @RequestMapping("/employees")
+    public Map<String, Object> getEmployees(int page, int num) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map = employeeManager.getEmployees(page, num);
+        return map;
+    }
+
+
 }

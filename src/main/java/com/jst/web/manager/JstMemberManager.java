@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Stefan on 2017/3/6.
@@ -32,6 +36,24 @@ public class JstMemberManager {
 
     public JstMember getMember(long id) {
         return memberService.getMemberById(id);
+    }
+
+    public JstMember getMemberByName(String name) {
+        return memberService.getMemberByName(name);
+    }
+
+    public Map<String, Object> getMembers(int page, int num) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("total", memberService.getMemberCount());
+        int start = (page - 1)*num;
+        List<Long> ids = memberService.getMemberIds(start, num);
+        final List<JstMember> products = new ArrayList<JstMember>();
+        for (long id : ids) {
+            products.add(memberService.getMemberById(id));
+        }
+        map.put("list", products);
+        map.put("page", start);
+        return map;
     }
 
 }
