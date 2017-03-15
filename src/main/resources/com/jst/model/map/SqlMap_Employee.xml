@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jst.web.dao.JstEmployeeDAO">
+
+    <resultMap type="com.jst.web.model.database.JstEmployee" id="employeeMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="gender" column="gender"/>
+        <result property="age" column="age"/>
+        <result property="idNum" column="id_num"/>
+        <result property="address" column="address"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="joinTime" column="join_time"/>
+        <result property="dimissionTime" column="dimission_time"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+
+    <insert id="saveEmployee" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstEmployee">
+        INSERT  INTO JST_EMPLOYEE (
+            name,
+            gender,
+            age,
+            id_num,
+            address,
+            phone,
+            join_time,
+            update_time,
+            dimission_time
+        ) VALUES (
+            #{name},
+            #{gender},
+            #{age},
+            #{idNum},
+            #{address},
+            #{phone},
+            #{joinTime},
+            #{updateTime},
+            #{dimissionTime}
+        );
+    </insert>
+
+    <update id="updateEmployee" parameterType="com.jst.web.model.database.JstEmployee">
+        UPDATE JST_EMPLOYEE
+        SET name=#{name},
+            gender=#{gender},
+            age=#{age},
+            id_num=#{idNum},
+            address=#{address},
+            phone=#{phone},
+            join_time=#{joinTime},
+            update_time=#{updateTime},
+            dismission_time=#{dimissionTime}
+    </update>
+
+    <select id="getEmployeeById" parameterType="java.lang.Long" resultMap="employeeMap">
+        SELECT * FROM JST_EMPLOYEE WHERE id=#{id};
+    </select>
+
+    <select id="getEmployeeIds" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id FROM JST_EMPLOYEE WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
+    </select>
+
+    <select id="queryEmployeeIds" parameterMap="map" resultType="java.lang.Long">
+        SELECT id FROM JST_EMPLOYEE LIMIT #{start}, #{num}
+    </select>
+
+</mapper>

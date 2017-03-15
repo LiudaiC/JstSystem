@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jst.web.dao.JstProductDAO">
+
+    <resultMap type="com.jst.web.model.database.JstProduct" id="productMap">
+        <id property="id" column="id" />
+        <result property="opEmployee" column="op_id"/>
+        <result property="productName" column="product_name" />
+        <result property="originalPrice" column="original_price"/>
+        <result property="vipPrice" column="vip_price"/>
+        <result property="discountPrice" column="discount_price"/>
+        <result property="addTime" column="add_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <insert id="saveProduct" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstProduct">
+        INSERT  INTO JST_PRODUCT (
+            op_id,
+            product_name,
+            original_price,
+            vip_price,
+            discount_price,
+            add_time,
+            update_time
+        ) VALUES (
+            #{opEmployee},
+            #{productName},
+            #{originalPrice},
+            #{vipPrice},
+            #{discountPrice},
+            #{addTime},
+            #{updateTime}
+        );
+    </insert>
+
+    <update id="updateProduct" parameterType="com.jst.web.model.database.JstProduct">
+        UPDATE JST_PRODUCT
+        SET op_id=#{opEmployee},
+             product_name=#{productName},
+             original_price=#{originalPrice},
+             vip_price=#{vipPrice},
+             discount_price=#{discountPrice},
+             add_time=#{addTime},
+             update_time=#{updateTime}
+    </update>
+
+    <select id="getProductById" parameterType="java.lang.Long" resultMap="productMap">
+        SELECT * FROM JST_PRODUCT WHERE id=#{id};
+    </select>
+
+    <select id="getProductIds" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id FROM JST_PRODUCT WHERE name LIKE '%#{name}%'
+    </select>
+
+    <select id="queryProductIds" parameterMap="map" resultType="java.lang.Long">
+        SELECT id FROM JST_PRODUCT LIMIT #{start}, #{num}
+    </select>
+
+</mapper>

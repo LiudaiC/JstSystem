@@ -36,4 +36,12 @@ public class JstOrderService {
         return orderDAO.getOrderCount();
     }
 
+    public int getTotalByMemberId(long memId) {
+        return orderDAO.getTotalByMemberId(memId);
+    };
+
+    public List<Long> getOrderIdsByMem(long memId) {
+        return orderDAO.getOrderIdsByMem(memId);
+    }
+
 }

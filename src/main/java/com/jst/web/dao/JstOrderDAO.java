@@ -15,4 +15,6 @@ public interface JstOrderDAO {
     public JstOrder getOrderByName(String name);
     public List<Long> getOrderIds(int start, int num);
     public int getOrderCount();
+    public int getTotalByMemberId(long memId);
+    public List<Long> getOrderIdsByMem(long memId);
 }

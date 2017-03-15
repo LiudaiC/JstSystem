@@ -1,14 +1,12 @@
-package com.jst.web.model.database;
-
+package com.jst.web.model.response;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Stefan on 2017/3/1.
+ * Created by Administrator on 2017/3/15.
  */
-public class JstMember {
-
+public class ResponseMember {
     private long id;
     // 会员卡号
     private String cardNo;
@@ -22,14 +20,16 @@ public class JstMember {
     private String name;
     // 联系方式
     private String phone;
-    // 密码
-    private String password;
     // 注册时间
     private Timestamp registerTime;
     // 修改时间
     private Timestamp updateTime;
     // 注销时间
     private Timestamp cancelledTime;
+    // 消费次数
+    private int consumeCount;
+    // 消费积分
+    private int consumeNum;
 
     public long getId() {
         return id;
@@ -37,46 +37,6 @@ public class JstMember {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Timestamp getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(Timestamp registerTime) {
-        this.registerTime = registerTime;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
     }
 
     public String getCardNo() {
@@ -111,11 +71,59 @@ public class JstMember {
         this.expenseAmount = expenseAmount;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Timestamp getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Timestamp registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public Timestamp getCancelledTime() {
         return cancelledTime;
     }
 
     public void setCancelledTime(Timestamp cancelledTime) {
         this.cancelledTime = cancelledTime;
+    }
+
+    public int getConsumeCount() {
+        return consumeCount;
+    }
+
+    public void setConsumeCount(int consumeCount) {
+        this.consumeCount = consumeCount;
+    }
+
+    public int getConsumeNum() {
+        return consumeNum;
+    }
+
+    public void setConsumeNum(int consumeNum) {
+        this.consumeNum = consumeNum;
     }
 }

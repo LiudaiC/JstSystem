@@ -3,6 +3,7 @@ package com.jst.web.manager;
 import com.jst.web.model.database.JstAccount;
 import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.request.RequestEmployee;
+import com.jst.web.service.JstAccountService;
 import com.jst.web.service.JstEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,16 @@ public class JstEmployeeManager {
 
     @Autowired
     private JstEmployeeService employeeService;
+    @Autowired
+    private JstAccountService accountService;
+
+    public JstAccount getAccount(String account, String password){
+        return accountService.getAccount(account, password);
+    }
+
+    public JstAccount getAccountByEmpId(long empId){
+        return accountService.getAccount(empId);
+    }
 
     public long saveEmployee(RequestEmployee reqEmp) {
         JstEmployee emp = new JstEmployee();
@@ -36,6 +47,12 @@ public class JstEmployeeManager {
         emp.setJoinTime(stamp);
         emp.setUpdateTime(stamp);
         employeeService.saveEmployee(emp);
+        JstAccount account = new JstAccount();
+        account.setAdminRight(emp.getAdminRight());
+        account.setAccount(reqEmp.getAccount());
+        account.setPassword(reqEmp.getPassword());
+        account.setEmpId(reqEmp.getEmpId());
+        accountService.saveAccount(account);
         return emp.getId();
     }
 
@@ -60,4 +77,5 @@ public class JstEmployeeManager {
         map.put("page", start);
         return map;
     }
+
 }

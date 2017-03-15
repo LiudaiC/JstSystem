@@ -2,7 +2,10 @@ package com.jst.web.manager;
 
 import com.jst.web.model.database.JstMember;
 import com.jst.web.model.request.RequestMember;
+import com.jst.web.model.response.ResponseMember;
 import com.jst.web.service.JstMemberService;
+import com.jst.web.service.JstOrderService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +23,15 @@ public class JstMemberManager {
 
     @Autowired
     private JstMemberService memberService;
+    @Autowired
+    private JstOrderService orderService;
 
     public long saveMember(RequestMember mem) {
         JstMember member = new JstMember();
         member.setName(mem.getName());
         member.setPhone(mem.getPhone());
+        member.setCardNo(mem.getCardNo());
+        member.setChargeAmount(mem.getChargeAmount());
         member.setPassword(mem.getPassword());
         long currTime = System.currentTimeMillis();
         Timestamp stamp = new Timestamp(currTime);
@@ -47,9 +54,16 @@ public class JstMemberManager {
         map.put("total", memberService.getMemberCount());
         int start = (page - 1)*num;
         List<Long> ids = memberService.getMemberIds(start, num);
-        final List<JstMember> products = new ArrayList<JstMember>();
+        List<ResponseMember> products = new ArrayList<ResponseMember>();
+        JstMember member = null;
+        ResponseMember resMem = null;
         for (long id : ids) {
-            products.add(memberService.getMemberById(id));
+            member = memberService.getMemberById(id);
+            resMem = new ResponseMember();
+            BeanUtils.copyProperties(member,resMem);
+            resMem.setConsumeCount(orderService.getTotalByMemberId(id));
+            resMem.setConsumeNum(member.getExpenseAmount().intValue());
+            products.add(resMem);
         }
         map.put("list", products);
         map.put("page", start);

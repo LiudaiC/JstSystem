@@ -1,23 +1,29 @@
 DROP TABLE IF EXISTS jst_member;
 CREATE TABLE jst_member(
-  id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '员工id',
+  id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '会员id',
+  card_no VARCHAR(11) NOT NULL UNIQUE COMMENT '会员卡号',
+  status INT DEFAULT 0 COMMENT '会员卡状态',
+  charge_amount DECIMAL(6,2) NOT NULL COMMENT '充值金额',
+  expense_amount DECIMAL(6, 2) NOT NULL COMMENT '消费金额',
   phone VARCHAR(11) NOT NULL  COMMENT '会员电话',
   name VARCHAR(30) NOT NULL COMMENT '会员姓名',
   password VARCHAR(100) DEFAULT '123456',
   register_time DATETIME DEFAULT now() COMMENT '注册时间',
-  update_time DATETIME DEFAULT now() COMMENT '修改时间'
+  update_time DATETIME DEFAULT now() COMMENT '修改时间',
+  canceled_time DATETIME COMMENT '注销时间'
 ) ENGINE=Innodb CHARSET=UTF8 COMMENT '会员管理表';
 
 CREATE TABLE JST_ORDER (
   id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '订单id',
   product_id BIGINT NOT NULL COMMENT '产品id',
   op_id BIGINT NOT NULL COMMENT '操作人员id',
+  mem_id BIGINT COMMENT '会员id',
   original_price DECIMAL(6,2) COMMENT '原价',
   discount_price DECIMAL(6,2) COMMENT '优惠价',
   real_price DECIMAL(6,2) NOT NULL COMMENT '实际价格',
   add_time DATETIME DEFAULT now() COMMENT '新增时间',
   update_time DATETIME DEFAULT now() COMMENT '订单更新时间',
-  remark text DEFAULT '' COMMENT '订单备注'
+  remark text COMMENT '订单备注'
 ) ENGINE = Innodb CHARSET =UTF8 COMMENT '订单管理表';
 
 CREATE TABLE JST_PRODUCT (

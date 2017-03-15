@@ -8,13 +8,21 @@ import java.sql.Timestamp;
  */
 public class JstProduct {
 
+    // 产品id
     private long id;
+    // 产品名称
     private String productName;
+    // 原价
     private BigDecimal originalPrice;
+    // 会员价
     private BigDecimal vipPrice;
+    // 优惠价
     private BigDecimal discountPrice;
+    // 新增时间
     private Timestamp addTime;
+    // 更新时间
     private Timestamp updateTime;
+    // 操作人员
     private long opEmployee;
 
     public long getId() {

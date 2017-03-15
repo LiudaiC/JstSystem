@@ -59,4 +59,15 @@ public class JstOrderManager {
         return map;
     }
 
+    public List<JstOrder> getOrderIdsByMem(long memId) {
+        List<JstOrder> orders = new ArrayList<JstOrder>();
+        List<Long> orderIds = orderService.getOrderIdsByMem(memId);
+        JstOrder order = null;
+        for (long orderId : orderIds) {
+            order = orderService.getOrderById(orderId);
+            orders.add(order);
+        }
+        return orders;
+    }
+
 }

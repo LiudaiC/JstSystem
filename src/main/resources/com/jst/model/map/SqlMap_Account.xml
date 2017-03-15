@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jst.web.dao.JstMemberDAO">
+<mapper namespace="com.jst.web.dao.JstAccountDAO">
 
-    <resultMap type="com.jst.web.model.database.JstMember" id="memberMap">
+    <resultMap type="com.jst.web.model.database.JstAccount" id="accountMap">
         <id property="id" column="id" />
         <result property="name" column="name" />
         <result property="phone" column="phone"/>
@@ -11,8 +11,8 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
-    <insert id="saveMember" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstMember">
-        INSERT  INTO JST_MEMBER (
+    <insert id="saveAccount" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstAccount">
+        INSERT  INTO JST_ACCOUNT (
             name,
             phone,
             password,
@@ -27,24 +27,20 @@
         );
     </insert>
 
-    <update id="updateMember" parameterType="com.jst.web.model.database.JstMember">
-        UPDATE JST_MEMBER
+    <update id="updateAccount" parameterType="com.jst.web.model.database.JstAccount">
+        UPDATE JST_ACCOUNT
         SET name = #{name},
             phone = #{phone},
             password = #{password},
             update_time = #{updateTime}
     </update>
 
-    <select id="getMemberById" parameterType="java.lang.Long" resultMap="memberMap">
-        SELECT * FROM JST_MEMBER WHERE id=#{id};
+    <select id="getAccountById" parameterType="java.lang.Long" resultMap="accountMap">
+        SELECT * FROM JST_ACCOUNT WHERE id=#{id};
     </select>
 
-    <select id="getMemberIds" parameterType="java.lang.String" resultType="java.lang.Long">
-        SELECT id FROM JST_MEMBER WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
-    </select>
-
-    <select id="queryMemberIds" parameterMap="map" resultType="java.lang.Long">
-        SELECT id FROM JST_MEMBER LIMIT #{start}, #{num}
+    <select id="getAccountIds" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id FROM JST_ACCOUNT WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
     </select>
 
 </mapper>

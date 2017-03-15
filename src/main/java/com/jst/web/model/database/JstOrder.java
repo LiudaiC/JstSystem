@@ -24,8 +24,18 @@ public class JstOrder {
     private Timestamp addTime;
     // 修改时间
     private Timestamp updateTime;
+    // 会员id
+    private long memberId;
     // 订单备注
     private String remark;
+
+    public long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
+    }
 
     public long getId() {
         return id;

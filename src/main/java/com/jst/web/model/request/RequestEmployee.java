@@ -19,6 +19,12 @@ public class RequestEmployee {
     private String idNum;
     // 住址
     private String address;
+    // 员工id
+    private long empId;
+    // 账号
+    private String account;
+    // 密码
+    private String password;
 
     public String getName() {
         return name;
@@ -74,5 +80,29 @@ public class RequestEmployee {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public long getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(long empId) {
+        this.empId = empId;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
