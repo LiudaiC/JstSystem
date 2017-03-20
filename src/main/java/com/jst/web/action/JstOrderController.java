@@ -29,7 +29,7 @@ public class JstOrderController {
         return empId;
     }
 
-    @RequestMapping("/employee/{id}")
+    @RequestMapping("/order/{id}")
     public JstOrder getOrder(@PathVariable("id") long id){
         return orderManager.getOrderById(id);
     }

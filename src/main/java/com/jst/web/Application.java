@@ -37,7 +37,7 @@ public class Application {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/com/jst/model/map/SqlMap_Member.xml"));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/com/jst/model/map/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
