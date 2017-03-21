@@ -15,8 +15,12 @@ public class JstLoginManager {
     private JstAccountService accountService;
 
     public JstAccount login(String name, String password) {
-        JstAccount account = accountService.getAccount(name, password);
-        return account;
+        JstAccount account = accountService.getAccountByName(name);
+        int success = 0;
+        if (account != null && account.getPassword() != null && account.getPassword().equals(password)) {
+            return account;
+        }
+        return null;
     }
 
 }

@@ -25,10 +25,6 @@ public class JstEmployeeManager {
     @Autowired
     private JstAccountService accountService;
 
-    public JstAccount getAccount(String account, String password){
-        return accountService.getAccount(account, password);
-    }
-
     public JstAccount getAccountByEmpId(long empId){
         return accountService.getAccount(empId);
     }

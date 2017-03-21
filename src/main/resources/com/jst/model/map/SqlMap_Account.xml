@@ -4,47 +4,43 @@
 
     <resultMap type="com.jst.web.model.database.JstAccount" id="accountMap">
         <id property="id" column="id" />
-        <result property="name" column="name" />
-        <result property="phone" column="phone"/>
+        <result property="account" column="login_name" />
+        <result property="adminRight" column="admin_right"/>
         <result property="password" column="password"/>
-        <result property="registerTime" column="register_time"/>
-        <result property="updateTime" column="update_time"/>
+        <result property="empId" column="emp_id"/>
+        <result property="lastLoginTime" column="last_login_time"/>
     </resultMap>
 
     <insert id="saveAccount" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstAccount">
         INSERT  INTO JST_ACCOUNT (
-            name,
-            phone,
+            login_name,
+            admin_right,
             password,
-            register_time,
-            update_time
+            emp_id,
+            last_login_time
         ) VALUES (
-            #{name},
-            #{phone},
+            #{account},
+            #{adminRight},
             #{password},
-            #{registerTime},
-            #{updateTime}
+            #{empId},
+            #{lastLoginTime}
         );
     </insert>
 
     <update id="updateAccount" parameterType="com.jst.web.model.database.JstAccount">
         UPDATE JST_ACCOUNT
-        SET name = #{name},
-            phone = #{phone},
+        SET login_name = #{account},
+            admin_right = #{adminRight},
             password = #{password},
-            update_time = #{updateTime}
+            last_login_time = #{lastLoginTime}
     </update>
 
     <select id="getAccountById" parameterType="java.lang.Long" resultMap="accountMap">
         SELECT * FROM JST_ACCOUNT WHERE id=#{id};
     </select>
 
-    <select id="getAccountIds" parameterType="java.lang.String" resultType="java.lang.Long">
-        SELECT id FROM JST_ACCOUNT WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
-    </select>
-
-    <select id="getAccount" parameterType="map" resultMap="accountMap">
-        SELECT id FROM JST_ACCOUNT WHERE account='#{account}' OR password='#{passowrd}'
+    <select id="getAccountByName" parameterType="java.lang.String" resultMap="accountMap">
+        SELECT * FROM JST_ACCOUNT WHERE login_name=#{name}
     </select>
 
 </mapper>

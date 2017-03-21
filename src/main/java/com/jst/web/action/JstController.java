@@ -28,13 +28,13 @@ public class JstController {
 
     @RequestMapping("/login")
     public Map<String, Object> login(@RequestBody RequestLogin login, HttpServletRequest req, HttpServletResponse res) {
-        JstAccount account = loginManager.login(login.getAccount(), login.getPassword());
         String sessionId = "";
         Map<String, Object> map = new HashMap<String, Object>();
         int right = 0;
+        JstAccount account = loginManager.login(login.getAccount(), login.getPassword());
         int success = 0;
-        if (account != null) {
-            sessionId = UUID.fromString(account.toString()).toString();
+        if (account !=  null) {
+            sessionId = UUID.randomUUID().toString();
             req.getSession().setAttribute(sessionId, account);
             map.put("jstSession"+account.getEmpId(), sessionId);
             right = account.getAdminRight();

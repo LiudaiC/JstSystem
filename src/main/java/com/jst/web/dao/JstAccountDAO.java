@@ -11,5 +11,5 @@ public interface JstAccountDAO {
 
     public long saveAccount(JstAccount account);
     public JstAccount getAccountByEmpId(long empId);
-    public JstAccount getAccount(Map<String, String> map);
+    public JstAccount getAccountByName(String name);
 }

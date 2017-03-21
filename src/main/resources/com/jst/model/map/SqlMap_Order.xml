@@ -58,7 +58,7 @@
         SELECT * FROM JST_ORDER WHERE id=#{id};
     </select>
 
-    <select id="getOrderIds" parameterMap="map" resultType="java.lang.Long">
+    <select id="getOrderIds" parameterType="map" resultType="java.lang.Long">
         SELECT id FROM JST_ORDER LIMIT #{start}, #{num}
     </select>
 

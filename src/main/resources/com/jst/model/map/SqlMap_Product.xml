@@ -52,7 +52,7 @@
         SELECT id FROM JST_PRODUCT WHERE name LIKE '%#{name}%'
     </select>
 
-    <select id="queryProductIds" parameterMap="map" resultType="java.lang.Long">
+    <select id="queryProductIds" parameterType="map" resultType="java.lang.Long">
         SELECT id FROM JST_PRODUCT LIMIT #{start}, #{num}
     </select>
 

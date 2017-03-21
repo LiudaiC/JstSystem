@@ -21,11 +21,8 @@ public class JstAccountService {
         accountDAO.saveAccount(account);
     }
 
-    public JstAccount getAccount(String name, String pwd) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("account", name);
-        map.put("password", pwd);
-        return accountDAO.getAccount(map);
+    public JstAccount getAccountByName(String name) {
+        return accountDAO.getAccountByName(name);
     }
 
     public JstAccount getAccount(long empId) {

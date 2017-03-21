@@ -60,7 +60,7 @@
         SELECT id FROM JST_EMPLOYEE WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
     </select>
 
-    <select id="queryEmployeeIds" parameterMap="map" resultType="java.lang.Long">
+    <select id="queryEmployeeIds" parameterType="map" resultType="java.lang.Long">
         SELECT id FROM JST_EMPLOYEE LIMIT #{start}, #{num}
     </select>
 
