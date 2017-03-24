@@ -29,7 +29,7 @@ public class JstEmployee {
     // 入职时间
     private Timestamp joinTime;
     // 离职时间
-    private Timestamp dimissionTime;
+    private Timestamp dismissionTime;
 
     public long getId() {
         return id;
@@ -111,11 +111,11 @@ public class JstEmployee {
         this.updateTime = updateTime;
     }
 
-    public Timestamp getDimissionTime() {
-        return dimissionTime;
+    public Timestamp getDismissionTime() {
+        return dismissionTime;
     }
 
-    public void setDimissionTime(Timestamp dimissionTime) {
-        this.dimissionTime = dimissionTime;
+    public void setDimissionTime(Timestamp dismissionTime) {
+        this.dismissionTime = dismissionTime;
     }
 }

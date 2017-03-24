@@ -50,12 +50,37 @@ CREATE TABLE JST_EMPLOYEE(
   dismission_time DATETIME COMMENT '离职时间'
 ) ENGINE = Innodb CHARSET = UTF8 COMMENT '员工管理表';
 
-
+DROP TABLE if EXISTS JST_ACCOUNT;
 CREATE TABLE JST_ACCOUNT(
   id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '账户id',
   emp_id BIGINT UNIQUE COMMENT '员工id',
-  login_name VARCHAR(30) NOT NULL COMMENT '登录账号',
+  login_name VARCHAR(30) UNIQUE COMMENT '登录账号',
   password VARCHAR(20) NOT NULL COMMENT '登录密码',
   admin_right INT COMMENT '账号权限',
   last_login_time DATETIME COMMENT '上次登录时间'
 ) ENGINE = Innodb CHARSET = UTF8 COMMENT '账号管理表';
+
+
+
+
+
+
+
+
+INSERT INTO JST_ACCOUNT(login_name,password,admin_right,last_login_time) VALUES ('admin', '123456', 3, now());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -5,10 +5,7 @@ import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.database.JstMember;
 import com.jst.web.model.request.RequestMember;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,18 +19,18 @@ public class JstMemberController {
     @Autowired
     private JstMemberManager memManager;
 
-    @RequestMapping("/member/save")
+    @RequestMapping(value = "/members", method = RequestMethod.POST)
     public long saveMember(@RequestBody RequestMember requestMember) {
         long genId = memManager.saveMember(requestMember);
         return genId;
     }
 
-    @RequestMapping("/member/{id}")
+    @RequestMapping("/members/{id}")
     public JstMember getMember(@PathVariable("id") long id) {
         return memManager.getMember(id);
     }
 
-    @RequestMapping("/member/{name}")
+    @RequestMapping("/members/{name}")
     public JstMember getMember(@PathVariable("name") String name){
         return memManager.getMemberByName(name);
     }

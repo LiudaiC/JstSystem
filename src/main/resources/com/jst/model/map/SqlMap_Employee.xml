@@ -11,7 +11,7 @@
         <result property="address" column="address"/>
         <result property="updateTime" column="update_time"/>
         <result property="joinTime" column="join_time"/>
-        <result property="dimissionTime" column="dimission_time"/>
+        <result property="dismissionTime" column="dismission_time"/>
         <result property="phone" column="phone"/>
     </resultMap>
 
@@ -25,7 +25,7 @@
             phone,
             join_time,
             update_time,
-            dimission_time
+            dismission_time
         ) VALUES (
             #{name},
             #{gender},
@@ -35,7 +35,7 @@
             #{phone},
             #{joinTime},
             #{updateTime},
-            #{dimissionTime}
+            #{dismissionTime}
         );
     </insert>
 
@@ -49,7 +49,7 @@
             phone=#{phone},
             join_time=#{joinTime},
             update_time=#{updateTime},
-            dismission_time=#{dimissionTime}
+            dismission_time=#{dismissionTime}
     </update>
 
     <select id="getEmployeeById" parameterType="java.lang.Long" resultMap="employeeMap">

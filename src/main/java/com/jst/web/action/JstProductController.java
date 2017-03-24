@@ -5,10 +5,7 @@ import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.database.JstProduct;
 import com.jst.web.model.request.RequestProduct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,18 +20,18 @@ public class JstProductController {
     @Autowired
     private JstProductManager productManager;
 
-    @RequestMapping("/product/save")
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
     public long saveProduct(@RequestBody RequestProduct requestProduct) {
         long genId = productManager.saveProduct(requestProduct);
         return genId;
     }
 
-    @RequestMapping("/product/{id}")
+    @RequestMapping("/products/{id}")
     public JstProduct getProduct(@PathVariable("id") long id) {
         return productManager.getProduct(id);
     }
 
-    @RequestMapping("/product/{name}")
+    @RequestMapping("/products/{name}")
     public JstProduct getProduct(@PathVariable("name") String name){
         return productManager.getProductByName(name);
     }

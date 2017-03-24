@@ -8,6 +8,7 @@ import com.jst.web.model.request.RequestOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -23,18 +24,18 @@ public class JstOrderController {
     @Autowired
     private JstOrderManager orderManager;
 
-    @RequestMapping("/order/save")
+    @RequestMapping(value = "/orders", method = RequestMethod.POST)
     public long saveOrder(RequestOrder emp) {
         long empId = orderManager.saveOrder(emp);
         return empId;
     }
 
-    @RequestMapping("/order/{id}")
+    @RequestMapping("/orders/{id}")
     public JstOrder getOrder(@PathVariable("id") long id){
         return orderManager.getOrderById(id);
     }
 
-    @RequestMapping("/order/{name}")
+    @RequestMapping("/orders/{name}")
     public JstOrder getOrder(@PathVariable("name") String name){
         return orderManager.getOrderByName(name);
     }

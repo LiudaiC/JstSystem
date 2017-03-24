@@ -43,11 +43,15 @@ public class JstEmployeeManager {
         emp.setJoinTime(stamp);
         emp.setUpdateTime(stamp);
         employeeService.saveEmployee(emp);
-        JstAccount account = new JstAccount();
+        JstAccount account = accountService.getAccountByName(reqEmp.getAccount());
+        if (account != null) {
+            return -1;
+        }
+        account = new JstAccount();
         account.setAdminRight(emp.getAdminRight());
         account.setAccount(reqEmp.getAccount());
         account.setPassword(reqEmp.getPassword());
-        account.setEmpId(reqEmp.getEmpId());
+        account.setEmpId(emp.getId());
         accountService.saveAccount(account);
         return emp.getId();
     }
