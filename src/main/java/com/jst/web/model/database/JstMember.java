@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 public class JstMember {
 
     private long id;
+    // 添加员工id
+    private long empId;
     // 会员卡号
     private String cardNo;
     // 会员卡状态:0 正常，1 注销
@@ -37,6 +39,14 @@ public class JstMember {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(long empId) {
+        this.empId = empId;
     }
 
     public String getName() {

@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class JstMemberManager {
     @Autowired
     private JstOrderService orderService;
 
-    public long saveMember(RequestMember mem) {
+    public long saveMember(long empId, RequestMember mem) {
         JstMember member = new JstMember();
         member.setName(mem.getName());
         member.setPhone(mem.getPhone());
@@ -37,6 +38,8 @@ public class JstMemberManager {
         Timestamp stamp = new Timestamp(currTime);
         member.setRegisterTime(stamp);
         member.setUpdateTime(stamp);
+        member.setEmpId(empId);
+        member.setExpenseAmount(new BigDecimal(0));
         memberService.saveMember(member);
         return member.getId();
     }

@@ -1,10 +1,12 @@
 package com.jst.web.action;
 
 import com.jst.web.manager.JstOrderManager;
+import com.jst.web.model.database.JstAccount;
 import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.database.JstOrder;
 import com.jst.web.model.request.RequestEmployee;
 import com.jst.web.model.request.RequestOrder;
+import com.jst.web.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +28,8 @@ public class JstOrderController {
 
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
     public long saveOrder(RequestOrder emp) {
-        long empId = orderManager.saveOrder(emp);
+        JstAccount account = SecurityUtil.getAccount();
+        long empId = orderManager.saveOrder(account.getEmpId(), emp);
         return empId;
     }
 

@@ -22,7 +22,7 @@ public class JstOrderManager {
     @Autowired
     private JstOrderService orderService;
 
-    public long saveOrder(RequestOrder order) {
+    public long saveOrder(long opEmpId, RequestOrder order) {
         JstOrder jOrder = new JstOrder();
         jOrder.setProductId(order.getProductId());
         jOrder.setDiscountPrice(order.getDiscountPrice());
@@ -33,6 +33,7 @@ public class JstOrderManager {
         Timestamp stamp = new Timestamp(currTime);
         jOrder.setAddTime(stamp);
         jOrder.setUpdateTime(stamp);
+        jOrder.setEmployeeId(opEmpId);
         orderService.saveOrder(jOrder);
         return jOrder.getId();
     }

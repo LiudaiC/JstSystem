@@ -1,9 +1,11 @@
 package com.jst.web.action;
 
 import com.jst.web.manager.JstProductManager;
+import com.jst.web.model.database.JstAccount;
 import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.database.JstProduct;
 import com.jst.web.model.request.RequestProduct;
+import com.jst.web.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,8 @@ public class JstProductController {
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public long saveProduct(@RequestBody RequestProduct requestProduct) {
-        long genId = productManager.saveProduct(requestProduct);
+        JstAccount account = SecurityUtil.getAccount();
+        long genId = productManager.saveProduct(account.getEmpId(), requestProduct);
         return genId;
     }
 

@@ -4,6 +4,7 @@
 
     <resultMap type="com.jst.web.model.database.JstMember" id="memberMap">
         <id property="id" column="id" />
+        <result property="empId" column="emp_id"/>
         <result property="name" column="name" />
         <result property="phone" column="phone"/>
         <result property="password" column="password"/>
@@ -18,6 +19,7 @@
 
     <insert id="saveMember" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstMember">
         INSERT  INTO JST_MEMBER (
+            emp_id,
             name,
             phone,
             password,
@@ -29,6 +31,7 @@
             expense_amount,
             canceled_time
         ) VALUES (
+            #{empId},
             #{name},
             #{phone},
             #{password},
@@ -44,7 +47,8 @@
 
     <update id="updateMember" parameterType="com.jst.web.model.database.JstMember">
         UPDATE JST_MEMBER
-        SET name = #{name},
+        SET emp_id = #{empId},
+            name = #{name},
             phone = #{phone},
             password = #{password},
             update_time = #{updateTime},

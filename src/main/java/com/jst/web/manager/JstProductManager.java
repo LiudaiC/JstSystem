@@ -20,7 +20,7 @@ public class JstProductManager {
     @Autowired
     private JstProductService productService;
 
-    public long saveProduct(RequestProduct pro) {
+    public long saveProduct(long empId, RequestProduct pro) {
         JstProduct product = new JstProduct();
         product.setProductName(pro.getProductName());
         product.setDiscountPrice(pro.getDiscountPrice());
@@ -28,6 +28,7 @@ public class JstProductManager {
         product.setVipPrice(pro.getVipPrice());
         long currTime = System.currentTimeMillis();
         Timestamp stamp = new Timestamp(currTime);
+        product.setOpEmployee(empId);
         productService.saveProduct(product);
         return product.getId();
     }
