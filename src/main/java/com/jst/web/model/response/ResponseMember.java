@@ -14,14 +14,18 @@ public class ResponseMember {
     private int status;
     // 充值金额
     private BigDecimal chargeAmount;
+    // 赠送金额
+    private BigDecimal extraAmount;
     // 消费金额
     private BigDecimal expenseAmount;
+    // 余额
+    private BigDecimal balanceAmount;
     // 姓名
     private String name;
     // 联系方式
     private String phone;
     // 注册时间
-    private Timestamp registerTime;
+    private String registerTime;
     // 修改时间
     private Timestamp updateTime;
     // 注销时间
@@ -30,6 +34,8 @@ public class ResponseMember {
     private int consumeCount;
     // 消费积分
     private int consumeNum;
+    // 症状备注
+    private String remark;
 
     public long getId() {
         return id;
@@ -67,8 +73,24 @@ public class ResponseMember {
         return expenseAmount;
     }
 
+    public BigDecimal getExtraAmount() {
+        return extraAmount;
+    }
+
+    public void setExtraAmount(BigDecimal extraAmount) {
+        this.extraAmount = extraAmount;
+    }
+
     public void setExpenseAmount(BigDecimal expenseAmount) {
         this.expenseAmount = expenseAmount;
+    }
+
+    public BigDecimal getBalanceAmount() {
+        return balanceAmount;
+    }
+
+    public void setBalanceAmount(BigDecimal balanceAmount) {
+        this.balanceAmount = balanceAmount;
     }
 
     public String getName() {
@@ -87,16 +109,24 @@ public class ResponseMember {
         this.phone = phone;
     }
 
-    public Timestamp getRegisterTime() {
+    public String getRegisterTime() {
         return registerTime;
     }
 
-    public void setRegisterTime(Timestamp registerTime) {
+    public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
     }
 
     public Timestamp getUpdateTime() {
         return updateTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public void setUpdateTime(Timestamp updateTime) {

@@ -33,10 +33,17 @@
             admin_right = #{adminRight},
             password = #{password},
             last_login_time = #{lastLoginTime}
+        WHERE emp_id=#{empId}
     </update>
 
-    <select id="getAccountById" parameterType="java.lang.Long" resultMap="accountMap">
-        SELECT * FROM JST_ACCOUNT WHERE id=#{id};
+    <update id="updatePassword" parameterType="java.util.Map">
+        UPDATE JST_ACCOUNT
+        SET password = #{password}
+        WHERE id=#{id}
+    </update>
+
+    <select id="getAccountByEmpId" parameterType="java.lang.Long" resultMap="accountMap">
+        SELECT * FROM JST_ACCOUNT WHERE emp_id=#{empId};
     </select>
 
     <select id="getAccountByName" parameterType="java.lang.String" resultMap="accountMap">

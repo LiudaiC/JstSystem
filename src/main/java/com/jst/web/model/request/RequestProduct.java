@@ -7,10 +7,20 @@ import java.math.BigDecimal;
  */
 public class RequestProduct {
 
+    private long id;
     private String productName;
     private BigDecimal originalPrice;
     private BigDecimal vipPrice;
     private BigDecimal discountPrice;
+    private BigDecimal proportion;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getProductName() {
         return productName;
@@ -42,5 +52,13 @@ public class RequestProduct {
 
     public void setDiscountPrice(BigDecimal discountPrice) {
         this.discountPrice = discountPrice;
+    }
+
+    public BigDecimal getProportion() {
+        return proportion;
+    }
+
+    public void setProportion(BigDecimal proportion) {
+        this.proportion = proportion;
     }
 }

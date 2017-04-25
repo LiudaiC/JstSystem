@@ -24,6 +24,8 @@ public class JstProduct {
     private Timestamp updateTime;
     // 操作人员
     private long opEmployee;
+    // 项目分成
+    private BigDecimal proportion;
 
     public long getId() {
         return id;
@@ -87,5 +89,13 @@ public class JstProduct {
 
     public void setOpEmployee(long opEmployee) {
         this.opEmployee = opEmployee;
+    }
+
+    public BigDecimal getProportion() {
+        return proportion;
+    }
+
+    public void setProportion(BigDecimal proportion) {
+        this.proportion = proportion;
     }
 }

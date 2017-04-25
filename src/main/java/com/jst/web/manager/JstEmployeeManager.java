@@ -3,10 +3,12 @@ package com.jst.web.manager;
 import com.jst.web.model.database.JstAccount;
 import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.request.RequestEmployee;
+import com.jst.web.model.response.ResponseEmployee;
 import com.jst.web.service.JstAccountService;
 import com.jst.web.service.JstEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -29,10 +31,11 @@ public class JstEmployeeManager {
         return accountService.getAccount(empId);
     }
 
+    @Transactional
     public long saveEmployee(RequestEmployee reqEmp) {
         JstEmployee emp = new JstEmployee();
         emp.setName(reqEmp.getName());
-        emp.setPhone(reqEmp.getName());
+        emp.setPhone(reqEmp.getPhone());
         emp.setGender(reqEmp.isGender());
         emp.setIdNum(reqEmp.getIdNum());
         emp.setAddress(reqEmp.getAddress());
@@ -42,22 +45,43 @@ public class JstEmployeeManager {
         Timestamp stamp = new Timestamp(currTime);
         emp.setJoinTime(stamp);
         emp.setUpdateTime(stamp);
-        employeeService.saveEmployee(emp);
-        JstAccount account = accountService.getAccountByName(reqEmp.getAccount());
-        if (account != null) {
-            return -1;
-        }
+        JstAccount account = new JstAccount();
         account = new JstAccount();
-        account.setAdminRight(emp.getAdminRight());
+        account.setAdminRight(reqEmp.getAdminRight());
         account.setAccount(reqEmp.getAccount());
         account.setPassword(reqEmp.getPassword());
         account.setEmpId(emp.getId());
-        accountService.saveAccount(account);
+        if (reqEmp.getId() > 0) {
+            emp.setId(reqEmp.getId());
+            account.setEmpId(reqEmp.getId());
+            employeeService.updateEmployee(emp);
+            accountService.updateAccount(account);
+        } else {
+            employeeService.saveEmployee(emp);
+            if (accountService.getAccountByName(reqEmp.getAccount()) != null) {
+                return -1;
+            }
+            account.setEmpId(emp.getId());
+            accountService.saveAccount(account);
+        }
         return emp.getId();
     }
 
-    public JstEmployee getEmployeeById(long id) {
-        return employeeService.getEmployeeById(id);
+    public ResponseEmployee getEmployeeById(long id) {
+        ResponseEmployee res = new ResponseEmployee();
+        JstEmployee emp = employeeService.getEmployeeById(id);
+        res.setId(id);
+        res.setName(emp.getName());
+        res.setPhone(emp.getPhone());
+        res.setAddress(emp.getAddress());
+        res.setIdNum(emp.getIdNum());
+        JstAccount account = accountService.getAccount(id);
+        if (account != null) {
+            res.setAccount(account.getAccount());
+            res.setPassword(account.getPassword());
+            res.setAdminRight(account.getAdminRight());
+        }
+        return res;
     }
 
     public JstEmployee getEmployeeByName(String name) {
@@ -69,11 +93,11 @@ public class JstEmployeeManager {
         map.put("total", employeeService.getEmployeeCount());
         int start = (page - 1)*num;
         List<Long> ids = employeeService.getEmployeeIds(start, num);
-        List<JstEmployee> products = new ArrayList<JstEmployee>();
+        List<JstEmployee> emps = new ArrayList<JstEmployee>();
         for (long id : ids) {
-            products.add(employeeService.getEmployeeById(id));
+            emps.add(employeeService.getEmployeeById(id));
         }
-        map.put("list", products);
+        map.put("list", emps);
         map.put("page", start);
         return map;
     }

@@ -47,21 +47,24 @@
             id_num=#{idNum},
             address=#{address},
             phone=#{phone},
-            join_time=#{joinTime},
-            update_time=#{updateTime},
-            dismission_time=#{dismissionTime}
+            update_time=#{updateTime}
+        WHERE id=#{id}
     </update>
 
     <select id="getEmployeeById" parameterType="java.lang.Long" resultMap="employeeMap">
         SELECT * FROM JST_EMPLOYEE WHERE id=#{id};
     </select>
 
-    <select id="getEmployeeIds" parameterType="java.lang.String" resultType="java.lang.Long">
+    <select id="queryEmployeeIds" parameterType="java.lang.String" resultType="java.lang.Long">
         SELECT id FROM JST_EMPLOYEE WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
     </select>
 
-    <select id="queryEmployeeIds" parameterType="map" resultType="java.lang.Long">
+    <select id="getEmployeeIds" parameterType="map" resultType="java.lang.Long">
         SELECT id FROM JST_EMPLOYEE LIMIT #{start}, #{num}
+    </select>
+
+    <select id="getEmployeeCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM JST_EMPLOYEE
     </select>
 
 </mapper>

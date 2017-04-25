@@ -2,8 +2,10 @@ package com.jst.web.dao;
 
 import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.database.JstOrder;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/10.
@@ -13,8 +15,10 @@ public interface JstOrderDAO {
     public long saveOrder(JstOrder order);
     public JstOrder getOrderById(long id);
     public JstOrder getOrderByName(String name);
-    public List<Long> getOrderIds(int start, int num);
+    public List<Long> getOrderIds(Map map);
+    public List<Long> getOrderIdsInMonth(Map map);
     public int getOrderCount();
-    public int getTotalByMemberId(long memId);
+    public int getTotalByMemberId(@Param("memId") long memId);
     public List<Long> getOrderIdsByMem(long memId);
+    public int revokeOrder(@Param("orderId")long orderId);
 }

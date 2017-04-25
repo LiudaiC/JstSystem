@@ -8,12 +8,15 @@
         <result property="name" column="name" />
         <result property="phone" column="phone"/>
         <result property="password" column="password"/>
+        <result property="remark" column="remark"/>
         <result property="registerTime" column="register_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="cardNo" column="card_no"/>
         <result property="status" column="status"/>
         <result property="chargeAmount" column="charge_amount"/>
+        <result property="extraAmount" column="extra_amount"/>
         <result property="expenseAmount" column="expense_amount"/>
+        <result property="balanceAmount" column="balance_amount"/>
         <result property="cancelledTime" column="canceled_time"/>
     </resultMap>
 
@@ -23,24 +26,30 @@
             name,
             phone,
             password,
+            remark,
             register_time,
             update_time,
             card_no,
             status,
             charge_amount,
+            extra_amount,
             expense_amount,
+            balance_amount,
             canceled_time
         ) VALUES (
             #{empId},
             #{name},
             #{phone},
             #{password},
+            #{remark},
             #{registerTime},
             #{updateTime},
             #{cardNo},
             #{status},
             #{chargeAmount},
+            #{extraAmount},
             #{expenseAmount},
+            #{balanceAmount},
             #{cancelledTime}
         );
     </insert>
@@ -51,24 +60,47 @@
             name = #{name},
             phone = #{phone},
             password = #{password},
+            remark = #{remark},
             update_time = #{updateTime},
             card_no = #{cardNo},
             status = #{status},
+            extra_amount=#{extraAmount},
             charge_amount = #{chargeAmount},
             expense_amount = #{expenseAmount},
-            canceled_time = #{cancelledTime}
+            canceled_time = #{cancelledTime},
+            balance_amount = #{balanceAmount}
+       WHERE id=#{id}
     </update>
 
     <select id="getMemberById" parameterType="java.lang.Long" resultMap="memberMap">
-        SELECT * FROM JST_MEMBER WHERE id=#{id};
+        SELECT * FROM JST_MEMBER WHERE id=#{id}
     </select>
 
-    <select id="getMemberIds" parameterType="java.lang.String" resultType="java.lang.Long">
-        SELECT id FROM JST_MEMBER WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
+    <select id="getMemberByCardNo" parameterType="java.lang.String" resultMap="memberMap">
+        SELECT * FROM JST_MEMBER WHERE card_no=#{cardNo}
     </select>
 
-    <select id="queryMemberIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_MEMBER LIMIT #{start}, #{num}
+    <select id="getMemberIdsByName" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id FROM JST_MEMBER WHERE  status=0 AND name LIKE '%${name}%' OR card_no LIKE '%${name}%'
     </select>
+
+    <select id="getMemberIds" parameterType="map" resultType="java.lang.Long">
+        SELECT id FROM JST_MEMBER WHERE status=0 ORDER BY register_time LIMIT #{start}, #{num}
+    </select>
+
+    <select id="getMemberCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM JST_MEMBER WHERE status=0
+    </select>
+
+    <update id="expense" parameterType="map">
+        UPDATE JST_MEMBER SET
+         balance_amount = balance_amount - #{expense},
+         expense_amount = expense_amount + #{expense}
+        WHERE id=#{id};
+    </update>
+
+    <update id="revokeMember" parameterType="java.lang.Long">
+        UPDATE JST_MEMBER SET status=1 WHERE id=#{id}
+    </update>
 
 </mapper>

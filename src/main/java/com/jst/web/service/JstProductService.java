@@ -6,7 +6,9 @@ import com.jst.web.model.request.RequestProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/10.
@@ -21,21 +23,27 @@ public class JstProductService {
         productDao.saveProduct(pro);
     }
 
+    public void updateProduct(JstProduct pro) {
+        productDao.updateProduct(pro);
+    }
+
     public JstProduct getProductById(long id) {
         return productDao.getProductById(id);
     }
 
-    public JstProduct getProductByName(String name) {
-        return productDao.getProductByName(name);
+    public List<Long> queryProductIds(String name) {
+        return productDao.queryProductIds(name);
     }
 
     public List<Long> getProductIds(int start, int num) {
-        return productDao.getProductIds(start, num);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("start", start);
+        map.put("num", num);
+        return productDao.getProductIds(map);
     }
 
     public int getProductCount() {
         return productDao.getProductCount();
     }
-
 
 }

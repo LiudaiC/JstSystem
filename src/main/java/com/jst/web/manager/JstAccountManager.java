@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * Created by Administrator on 2017/3/18.
  */
 @Component
-public class JstLoginManager {
+public class JstAccountManager {
 
     @Autowired
     private JstAccountService accountService;
@@ -20,6 +20,10 @@ public class JstLoginManager {
             return account;
         }
         return null;
+    }
+
+    public int modifyPassword(long accountId, String password) {
+        return accountService.updatePassword(accountId, password);
     }
 
 }

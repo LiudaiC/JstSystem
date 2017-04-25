@@ -5,7 +5,9 @@ import com.jst.web.model.database.JstOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/10.
@@ -28,8 +30,23 @@ public class JstOrderService {
         return orderDAO.getOrderByName(name);
     }
 
-    public List<Long> getOrderIds(int start, int num) {
-        return orderDAO.getOrderIds(start, num);
+    public List<Long> getOrderIds(long empId, long monthBegin) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("empId", empId);
+        map.put("monthBegin", monthBegin);
+        return orderDAO.getOrderIdsInMonth(map);
+    }
+
+    public List<Long> getOrderIds(long empId, int start, int num) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("empId", empId);
+        map.put("start", start);
+        map.put("num", num);
+        return orderDAO.getOrderIds(map);
+    }
+
+    public int revokeOrder(long orderId) {
+       return orderDAO.revokeOrder(orderId);
     }
 
     public int getOrderCount() {

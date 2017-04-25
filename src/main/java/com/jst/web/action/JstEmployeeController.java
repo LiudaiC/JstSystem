@@ -3,6 +3,7 @@ package com.jst.web.action;
 import com.jst.web.manager.JstEmployeeManager;
 import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.request.RequestEmployee;
+import com.jst.web.model.response.ResponseEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +27,11 @@ public class JstEmployeeController {
     }
 
     @RequestMapping("/employees/{id}")
-    public JstEmployee getEmployee(@PathVariable("id") long id){
+    public ResponseEmployee getEmployee(@PathVariable("id") long id){
         return employeeManager.getEmployeeById(id);
     }
 
-    @RequestMapping("/employees/{name}")
+    @RequestMapping("/employees/query/{name}")
     public JstEmployee getEmployee(@PathVariable("name") String name){
         return employeeManager.getEmployeeByName(name);
     }
@@ -39,6 +40,13 @@ public class JstEmployeeController {
     public Map<String, Object> getEmployees(int page, int num) {
         Map<String, Object> map = new HashMap<String, Object>();
         map = employeeManager.getEmployees(page, num);
+        return map;
+    }
+
+    @RequestMapping("/employees/all")
+    public Map<String, Object> getEmployees() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map = employeeManager.getEmployees(1, 1000);
         return map;
     }
 

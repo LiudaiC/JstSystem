@@ -9,49 +9,57 @@
         <result property="memberId" column="member_id"/>
         <result property="originalPrice" column="original_price"/>
         <result property="discountPrice" column="discount_price"/>
+        <result property="vipPrice" column="vip_price"/>
         <result property="realPrice" column="real_price" />
         <result property="addTime" column="add_time"/>
         <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
         <result property="remark" column="remark"/>
     </resultMap>
 
     <insert id="saveOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstOrder">
         INSERT  INTO JST_ORDER (
-            name,
             product_id,
             employee_id,
             member_id,
             original_price,
             discount_price,
+            vip_price,
             real_price,
             add_time,
             update_time,
+            status,
             remark
         ) VALUES (
-            #{name},
             #{productId},
             #{employeeId},
             #{memberId},
             #{originalPrice},
             #{discountPrice},
+            #{vipPrice},
             #{realPrice},
             #{addTime},
             #{updateTime},
+            #{status},
             #{remark}
         );
     </insert>
 
     <update id="updateOrder" parameterType="com.jst.web.model.database.JstOrder">
         UPDATE JST_ORDER
-        SET name=#{name},
-            product_id=#{productId},
+        SET product_id=#{productId},
             employee_id=#{employeeId},
             member_id=#{memberId},
             original_price=#{originalPrice},
             discount_price=#{discountPrice},
+            vip_price=#{vipPrice}
             real_price=#{realPrice},
             update_time=#{updateTime},
             remark=#{remark}
+    </update>
+
+    <update id="revokeOrder" parameterType="java.lang.Long">
+        UPDATE JST_ORDER SET status=1 WHERE id=#{orderId}
     </update>
 
     <select id="getOrderById" parameterType="java.lang.Long" resultMap="orderMap">
@@ -59,11 +67,30 @@
     </select>
 
     <select id="getOrderIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_ORDER LIMIT #{start}, #{num}
+        SELECT id FROM JST_ORDER
+        <if test="empId &gt; 0">
+            WHERE employee_id = #{empId}
+        </if>
+        LIMIT #{start}, #{num}
+    </select>
+
+    <select id="getOrderIdsInMonth" parameterType="map" resultType="java.lang.Long">
+        SELECT id FROM JST_ORDER WHERE add_time > #{monthBegin} AND status=0
+        <if test="empId &gt; 0">
+          AND employee_id = #{empId}
+        </if>
+    </select>
+
+    <select id="getOrderCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM JST_ORDER WHERE status=0
+    </select>
+
+    <select id="getTotalByMemberId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM JST_ORDER WHERE member_id=#{memId} AND status=0
     </select>
 
     <select id="getOrderIdsByMem" parameterType="java.lang.Long" resultType="java.lang.Long">
-        SELECT id FROM JST_PRODUCT WHERE member_id=#{memId}
+        SELECT id FROM JST_ORDER WHERE member_id=#{memId}
     </select>
 
 </mapper>

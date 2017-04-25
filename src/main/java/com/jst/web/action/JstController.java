@@ -1,13 +1,11 @@
 package com.jst.web.action;
 
 import com.jst.web.constant.Constant;
-import com.jst.web.manager.JstLoginManager;
-import com.jst.web.manager.JstMemberManager;
+import com.jst.web.interceptor.JstInterceptor;
+import com.jst.web.manager.JstAccountManager;
 import com.jst.web.model.database.JstAccount;
-import com.jst.web.model.database.JstMember;
 import com.jst.web.model.request.RequestLogin;
-import com.jst.web.model.request.RequestMember;
-import com.jst.web.security.SecurityUtil;
+import com.jst.web.model.request.RequestPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,14 +25,17 @@ import java.util.UUID;
 public class JstController {
 
     @Autowired
-    private JstLoginManager loginManager;
+    private JstAccountManager accountManager;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public Map<String, Object> index(HttpServletRequest req, HttpServletResponse res) {
         Map<String, Object> map = new HashMap<String, Object>();
-        JstAccount account = SecurityUtil.authenticate(req, res);
+        JstAccount account = JstInterceptor.authenticate(req, res);
         if (account != null && account.getId() > 0) {
+            map.put("empId", account.getId());
             map.put("right", account.getAdminRight());
+        } else if (req.getQueryString() != null) {
+            map.put("relogin", true);
         }
         return map;
     }
@@ -44,15 +45,17 @@ public class JstController {
         String sessionId = "";
         Map<String, Object> map = new HashMap<String, Object>();
         int right = 0;
-        JstAccount account = loginManager.login(login.getAccount(), login.getPassword());
+        JstAccount account = accountManager.login(login.getAccount(), login.getPassword());
         int success = 0;
         if (account !=  null) {
             sessionId = UUID.randomUUID().toString();
             HttpSession session = req.getSession();
             session.setAttribute(sessionId, account);
+            session.setMaxInactiveInterval(3600*1000*24);
             map.put(Constant.JSTSESSIONID, sessionId);
             right = account.getAdminRight();
             success = 1;
+            map.put("empId", account.getEmpId());
         }
         map.put("success", success);
         map.put("right", right);
@@ -61,9 +64,27 @@ public class JstController {
 
     @RequestMapping("/logout")
     public int logout(HttpServletRequest req, HttpServletResponse res) {
+        Cookie[] cookies = req.getCookies();
+        Cookie cookie = null;
         HttpSession session = req.getSession();
-        session.removeAttribute("jstSession");
+        for (int i = 0, j = cookies.length; i < j; i++) {
+            cookie = cookies[i];
+            if (Constant.JSTSESSIONID.equals(cookie.getName())) {
+                session.removeAttribute(cookie.getValue());
+            }
+        }
         return 0;
+    }
+
+    @RequestMapping(value = "/passwords", method = RequestMethod.POST)
+    public int modifyPassword(@RequestBody RequestPassword req, HttpServletRequest request, HttpServletResponse res) {
+        JstAccount account = JstInterceptor.authenticate(request,res);
+        if (account!= null && req.getOldPassword() != null
+            && !req.getOldPassword().equals(account.getPassword())) {
+            return 2;
+        }
+        return accountManager.modifyPassword(account.getId(), req.getNewPassword());
+
     }
 
 

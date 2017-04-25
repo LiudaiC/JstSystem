@@ -21,7 +21,8 @@
             vip_price,
             discount_price,
             add_time,
-            update_time
+            update_time,
+            proportion
         ) VALUES (
             #{opEmployee},
             #{productName},
@@ -29,31 +30,40 @@
             #{vipPrice},
             #{discountPrice},
             #{addTime},
-            #{updateTime}
+            #{updateTime},
+            #{proportion}
         );
     </insert>
 
     <update id="updateProduct" parameterType="com.jst.web.model.database.JstProduct">
         UPDATE JST_PRODUCT
-        SET op_id=#{opEmployee},
+        SET  op_id=#{opEmployee},
              product_name=#{productName},
              original_price=#{originalPrice},
              vip_price=#{vipPrice},
              discount_price=#{discountPrice},
-             add_time=#{addTime},
-             update_time=#{updateTime}
+             update_time=#{updateTime},
+             proportion=#{proportion}
+        WHERE id=#{id}
     </update>
 
     <select id="getProductById" parameterType="java.lang.Long" resultMap="productMap">
         SELECT * FROM JST_PRODUCT WHERE id=#{id};
     </select>
 
-    <select id="getProductIds" parameterType="java.lang.String" resultType="java.lang.Long">
+    <select id="queryProductIds" parameterType="java.lang.String" resultType="java.lang.Long">
         SELECT id FROM JST_PRODUCT WHERE name LIKE '%#{name}%'
     </select>
 
-    <select id="queryProductIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_PRODUCT LIMIT #{start}, #{num}
+    <select id="getProductIds" parameterType="map" resultType="java.lang.Long">
+        SELECT id FROM JST_PRODUCT
+        <if test="start &gt; 0 and num &gt; 0">
+            LIMIT #{start}, #{num}
+        </if>
+    </select>
+
+    <select id="getProductCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM JST_PRODUCT
     </select>
 
 </mapper>

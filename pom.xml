@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jinshengtang.web</groupId>
   <artifactId>jst-end</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>jst-end Maven Webapp</name>
   <url>http://maven.apache.org</url><parent>
@@ -61,11 +61,34 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>jst-end</finalName>
+    <finalName>jst</finalName>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/webapp</directory>
+        <!--注意此次必须要放在此目录下才能被访问到-->
+        <targetPath>META-INF/resources</targetPath>
+        <includes>
+          <include>**/**</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+        <includes>
+          <include>**/**</include>
+        </includes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

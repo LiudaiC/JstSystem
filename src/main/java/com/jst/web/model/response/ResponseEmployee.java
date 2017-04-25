@@ -1,10 +1,9 @@
-package com.jst.web.model.request;
+package com.jst.web.model.response;
 
 /**
- * Created by Administrator on 2017/3/9.
+ * Created by Stefan on 2017/4/15.
  */
-public class RequestEmployee {
-
+public class ResponseEmployee {
     // id
     private long id;
     // 姓名

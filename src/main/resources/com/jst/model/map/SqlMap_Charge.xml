@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jst.web.dao.JstChargeDAO">
+
+    <resultMap type="com.jst.web.model.database.JstCharge" id="chargeMap">
+        <result property="id" column="id"/>
+        <result property="memberId" column="mem_id"/>
+        <result property="chargeAmount" column="charge_amount"/>
+        <result property="extraAmount" column="extra_amount"/>
+        <result property="chargeTime" column="charge_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <insert id="saveCharge" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstCharge">
+        INSERT  INTO JST_CHARGE (
+        mem_id,
+        charge_amount,
+        extra_amount,
+        charge_time,
+        remark
+        ) VALUES (
+        #{memberId},
+        #{chargeAmount},
+        #{extraAmount},
+        #{chargeTime},
+        #{remark}
+        );
+    </insert>
+
+    <select id="getChargeListByMemberId" parameterType="java.lang.Long" resultMap="chargeMap">
+        SELECT * FROM JST_CHARGE WHERE mem_id=#{memId} ORDER BY charge_time
+    </select>
+
+
+</mapper>

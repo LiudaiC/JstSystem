@@ -1,6 +1,7 @@
 package com.jst.web.model.request;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/3/9.
@@ -8,8 +9,10 @@ import java.math.BigDecimal;
 public class RequestOrder {
 
     private long productId;
-    private BigDecimal originalPrice;
-    private BigDecimal discountPrice;
+
+    private List<Long> pids;
+    private long memberId;
+    private long empId;
     private BigDecimal realPrice;
     private String remark;
 
@@ -21,25 +24,34 @@ public class RequestOrder {
         this.productId = productId;
     }
 
-    public BigDecimal getOriginalPrice() {
-        return originalPrice;
+    public List<Long> getPids() {
+        return pids;
     }
 
-    public void setOriginalPrice(BigDecimal originalPrice) {
-        this.originalPrice = originalPrice;
+    public void setPids(List<Long> pids) {
+        this.pids = pids;
     }
 
-    public BigDecimal getDiscountPrice() {
-        return discountPrice;
+    public long getMemberId() {
+        return memberId;
     }
 
-    public void setDiscountPrice(BigDecimal discountPrice) {
-        this.discountPrice = discountPrice;
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
+    }
+
+    public long getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(long empId) {
+        this.empId = empId;
     }
 
     public BigDecimal getRealPrice() {
         return realPrice;
     }
+
 
     public void setRealPrice(BigDecimal realPrice) {
         this.realPrice = realPrice;
@@ -52,4 +64,5 @@ public class RequestOrder {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
 }

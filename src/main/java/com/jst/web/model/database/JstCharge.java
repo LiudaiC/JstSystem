@@ -1,19 +1,18 @@
-package com.jst.web.model.request;
+package com.jst.web.model.database;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 /**
- * Created by Administrator on 2017/3/9.
+ * Created by Stefan on 2017/4/21.
  */
-public class RequestMember {
+public class JstCharge {
 
     private long id;
-    private String name;
-    private String cardNo;
+    private long memberId;
     private BigDecimal chargeAmount;
     private BigDecimal extraAmount;
-    private String phone;
-    private String password;
+    private Timestamp chargeTime;
     private String remark;
 
     public long getId() {
@@ -24,20 +23,12 @@ public class RequestMember {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public long getMemberId() {
+        return memberId;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCardNo() {
-        return cardNo;
-    }
-
-    public void setCardNo(String cardNo) {
-        this.cardNo = cardNo;
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
     }
 
     public BigDecimal getChargeAmount() {
@@ -56,20 +47,12 @@ public class RequestMember {
         this.extraAmount = extraAmount;
     }
 
-    public String getPhone() {
-        return phone;
+    public Timestamp getChargeTime() {
+        return chargeTime;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setChargeTime(Timestamp chargeTime) {
+        this.chargeTime = chargeTime;
     }
 
     public String getRemark() {

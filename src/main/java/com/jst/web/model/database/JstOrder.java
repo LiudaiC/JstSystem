@@ -18,6 +18,8 @@ public class JstOrder {
     private BigDecimal originalPrice;
     // 优惠价
     private BigDecimal discountPrice;
+    // 会员价
+    private BigDecimal vipPrice;
     // 实际支付价格
     private BigDecimal realPrice;
     // 新增时间
@@ -26,6 +28,8 @@ public class JstOrder {
     private Timestamp updateTime;
     // 会员id
     private long memberId;
+    // 订单状态
+    private int status;
     // 订单备注
     private String remark;
 
@@ -77,6 +81,14 @@ public class JstOrder {
         this.discountPrice = discountPrice;
     }
 
+    public BigDecimal getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(BigDecimal vipPrice) {
+        this.vipPrice = vipPrice;
+    }
+
     public BigDecimal getRealPrice() {
         return realPrice;
     }
@@ -101,11 +113,36 @@ public class JstOrder {
         this.updateTime = updateTime;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return "JstOrder{" +
+                "id=" + id +
+                ", productId=" + productId +
+                ", employeeId=" + employeeId +
+                ", originalPrice=" + originalPrice +
+                ", discountPrice=" + discountPrice +
+                ", vipPrice=" + vipPrice +
+                ", realPrice=" + realPrice +
+                ", addTime=" + addTime +
+                ", updateTime=" + updateTime +
+                ", memberId=" + memberId +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

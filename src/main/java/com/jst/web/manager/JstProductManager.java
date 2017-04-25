@@ -5,6 +5,7 @@ import com.jst.web.model.request.RequestProduct;
 import com.jst.web.service.JstProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -20,8 +21,10 @@ public class JstProductManager {
     @Autowired
     private JstProductService productService;
 
+    @Transactional
     public long saveProduct(long empId, RequestProduct pro) {
         JstProduct product = new JstProduct();
+        product.setProportion(pro.getProportion());
         product.setProductName(pro.getProductName());
         product.setDiscountPrice(pro.getDiscountPrice());
         product.setOriginalPrice(pro.getOriginalPrice());
@@ -29,7 +32,14 @@ public class JstProductManager {
         long currTime = System.currentTimeMillis();
         Timestamp stamp = new Timestamp(currTime);
         product.setOpEmployee(empId);
-        productService.saveProduct(product);
+        product.setUpdateTime(stamp);
+        if (pro.getId() <= 0) {
+            product.setAddTime(stamp);
+            productService.saveProduct(product);
+        } else {
+            product.setId(pro.getId());
+            productService.updateProduct(product);
+        }
         return product.getId();
     }
 
@@ -37,14 +47,22 @@ public class JstProductManager {
         return productService.getProductById(id);
     }
 
-    public JstProduct getProductByName(String name) {
-        return productService.getProductByName(name);
+    public List<JstProduct> getProductByName(String name) {
+        List<JstProduct> products = new ArrayList<JstProduct>();
+        List<Long> ids = new ArrayList<Long>();
+        ids = productService.queryProductIds(name);
+        JstProduct product = null;
+        for (long id: ids) {
+            product = productService.getProductById(id);
+            products.add(product);
+        }
+        return products;
     }
 
     public Map<String, Object> getProducts(int page, int num) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total", productService.getProductCount());
-        int start = (page - 1)*num;
+        int start = page > 0 ? (page - 1) * num : 0;
         List<Long> ids = productService.getProductIds(start, num);
         final List<JstProduct> products = new ArrayList<JstProduct>();
         for (long id : ids) {

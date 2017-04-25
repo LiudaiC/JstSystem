@@ -18,14 +18,20 @@ public class JstMember {
     private int status;
     // 充值金额
     private BigDecimal chargeAmount;
+    // 赠送金额
+    private BigDecimal extraAmount;
     // 消费金额
     private BigDecimal expenseAmount;
+    // 余额
+    private BigDecimal balanceAmount;
     // 姓名
     private String name;
     // 联系方式
     private String phone;
     // 密码
     private String password;
+    // 症状备注
+    private String remark;
     // 注册时间
     private Timestamp registerTime;
     // 修改时间
@@ -97,6 +103,14 @@ public class JstMember {
         this.cardNo = cardNo;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -113,12 +127,28 @@ public class JstMember {
         this.chargeAmount = chargeAmount;
     }
 
+    public BigDecimal getExtraAmount() {
+        return extraAmount;
+    }
+
+    public void setExtraAmount(BigDecimal extraAmount) {
+        this.extraAmount = extraAmount;
+    }
+
     public BigDecimal getExpenseAmount() {
         return expenseAmount;
     }
 
     public void setExpenseAmount(BigDecimal expenseAmount) {
         this.expenseAmount = expenseAmount;
+    }
+
+    public BigDecimal getBalanceAmount() {
+        return balanceAmount;
+    }
+
+    public void setBalanceAmount(BigDecimal balanceAmount) {
+        this.balanceAmount = balanceAmount;
     }
 
     public Timestamp getCancelledTime() {

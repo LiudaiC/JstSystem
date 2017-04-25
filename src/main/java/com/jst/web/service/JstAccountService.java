@@ -21,11 +21,22 @@ public class JstAccountService {
         accountDAO.saveAccount(account);
     }
 
+    public void updateAccount(JstAccount account) {
+        accountDAO.updateAccount(account);
+    }
+
     public JstAccount getAccountByName(String name) {
         return accountDAO.getAccountByName(name);
     }
 
     public JstAccount getAccount(long empId) {
         return accountDAO.getAccountByEmpId(empId);
+    }
+
+    public int updatePassword(long accountId, String password) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", accountId);
+        map.put("password", password);
+        return accountDAO.updatePassword(map);
     }
 }
