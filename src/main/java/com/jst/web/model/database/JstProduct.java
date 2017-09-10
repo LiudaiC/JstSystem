@@ -26,6 +26,10 @@ public class JstProduct {
     private long opEmployee;
     // 项目分成
     private BigDecimal proportion;
+    // 会员价提成
+    private BigDecimal memProportion;
+    //活动价提成
+    private BigDecimal promotionProportion;
 
     public long getId() {
         return id;
@@ -97,5 +101,21 @@ public class JstProduct {
 
     public void setProportion(BigDecimal proportion) {
         this.proportion = proportion;
+    }
+
+    public BigDecimal getMemProportion() {
+        return memProportion;
+    }
+
+    public void setMemProportion(BigDecimal memProportion) {
+        this.memProportion = memProportion;
+    }
+
+    public BigDecimal getPromotionProportion() {
+        return promotionProportion;
+    }
+
+    public void setPromotionProportion(BigDecimal promotionProportion) {
+        this.promotionProportion = promotionProportion;
     }
 }

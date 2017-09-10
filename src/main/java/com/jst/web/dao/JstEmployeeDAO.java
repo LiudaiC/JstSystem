@@ -10,11 +10,12 @@ import java.util.Map;
  */
 public interface JstEmployeeDAO {
 
-    public long saveEmployee(JstEmployee emp);
-    public long updateEmployee(JstEmployee emp);
-    public JstEmployee getEmployeeById(long id);
-    public JstEmployee getEmployeeByName(String name);
-    public List<Long> getEmployeeIds(Map map);
-    public int getEmployeeCount();
+    long saveEmployee(JstEmployee emp);
+    long updateEmployee(JstEmployee emp);
+    JstEmployee getEmployeeById(long id);
+    JstEmployee getEmployeeByName(String name);
+    List<Long> getEmployeeIds(Map map);
+    int getEmployeeCount();
+    void deactiveEmployee(Map map);
 
 }

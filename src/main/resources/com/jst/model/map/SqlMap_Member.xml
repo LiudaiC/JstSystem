@@ -81,7 +81,8 @@
     </select>
 
     <select id="getMemberIdsByName" parameterType="java.lang.String" resultType="java.lang.Long">
-        SELECT id FROM JST_MEMBER WHERE  status=0 AND name LIKE '%${name}%' OR card_no LIKE '%${name}%'
+        SELECT id FROM JST_MEMBER WHERE  status=0 AND
+         concat(name, card_no, phone) LIKE '%${name}%'
     </select>
 
     <select id="getMemberIds" parameterType="map" resultType="java.lang.Long">

@@ -36,18 +36,32 @@ public class JstOrderController {
 
     @RequestMapping("/orders/all")
     public Map<String, Object> getOrders(HttpServletRequest req, HttpServletResponse res) {
-        Map<String, Object> map = new HashMap<String, Object>();
         JstAccount account = JstInterceptor.authenticate(req, res);
+        String startTime = req.getParameter("start");
+        String endTime = req.getParameter("end");
         long empId = account.getAdminRight() > Constant.ALL_RIGHT ? 0 : account.getEmpId();
-        map = orderManager.getOrders(empId,1,1000);
-        return map;
+        Map<String, Object> conditionMap = new HashMap<String, Object>();
+        conditionMap.put("startTime", startTime);
+        conditionMap.put("endTime", endTime+" 23:59:59");
+        conditionMap.put("empId", empId);
+        conditionMap.put("page", 1);
+        conditionMap.put("num", 10000);
+        return orderManager.getOrders(conditionMap);
     }
 
     @RequestMapping("/orders/users/{empId}")
-    public Map<String, Object> getOrders(@PathVariable("empId") long empId) {
+    public Map<String, Object> getOrders(@PathVariable("empId") long empId, HttpServletRequest req,
+                                         HttpServletResponse res) {
         Map<String, Object> map = new HashMap<String, Object>();
-        map = orderManager.getOrdersInMonth(empId, new BigDecimal(0));
-        map.put("list", orderManager.getOrders(empId,1,1000).get("list"));
+        String startTime = req.getParameter("start");
+        String endTime = req.getParameter("end");
+        Map<String, Object> conditionMap = new HashMap<String, Object>();
+        conditionMap.put("startTime", startTime);
+        conditionMap.put("endTime", endTime+" 23:59:59");
+        conditionMap.put("empId", empId);
+        conditionMap.put("page", 1);
+        conditionMap.put("num", 1000);
+        map = orderManager.getOrders(conditionMap);
         return map;
     }
 
@@ -76,7 +90,11 @@ public class JstOrderController {
     @RequestMapping("/orders")
     public Map<String, Object> getOrders(int page, int num) {
         Map<String, Object> map = new HashMap<String, Object>();
-        map = orderManager.getOrders(0, page, num);
+        Map<String, Object> conditionMap = new HashMap<String, Object>();
+        conditionMap.put("empId", 0);
+        conditionMap.put("page", 1);
+        conditionMap.put("num", 1000);
+        map = orderManager.getOrders(conditionMap);
         return map;
     }
 }

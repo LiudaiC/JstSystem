@@ -9,6 +9,7 @@
         <result property="password" column="password"/>
         <result property="empId" column="emp_id"/>
         <result property="lastLoginTime" column="last_login_time"/>
+        <result property="active" column="active"/>
     </resultMap>
 
     <insert id="saveAccount" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstAccount">
@@ -17,13 +18,15 @@
             admin_right,
             password,
             emp_id,
-            last_login_time
+            last_login_time,
+            active
         ) VALUES (
             #{account},
             #{adminRight},
             #{password},
             #{empId},
-            #{lastLoginTime}
+            #{lastLoginTime},
+            #{active}
         );
     </insert>
 
@@ -32,22 +35,28 @@
         SET login_name = #{account},
             admin_right = #{adminRight},
             password = #{password},
-            last_login_time = #{lastLoginTime}
+            last_login_time = #{lastLoginTime},
+            active = #{active}
         WHERE emp_id=#{empId}
     </update>
 
     <update id="updatePassword" parameterType="java.util.Map">
         UPDATE JST_ACCOUNT
         SET password = #{password}
-        WHERE id=#{id}
+        WHERE id=#{id} and active = true
     </update>
 
+    <update id="deactiveAccount" parameterType="java.lang.Long">
+        UPDATE JST_ACCOUNT
+        SET active = FALSE
+        WHERE emp_id = #{empId}
+    </update>
     <select id="getAccountByEmpId" parameterType="java.lang.Long" resultMap="accountMap">
-        SELECT * FROM JST_ACCOUNT WHERE emp_id=#{empId};
+        SELECT * FROM JST_ACCOUNT WHERE emp_id=#{empId} and active = TRUE ;
     </select>
 
     <select id="getAccountByName" parameterType="java.lang.String" resultMap="accountMap">
-        SELECT * FROM JST_ACCOUNT WHERE login_name=#{name}
+        SELECT * FROM JST_ACCOUNT WHERE login_name=#{name} AND active = TRUE;
     </select>
 
 </mapper>

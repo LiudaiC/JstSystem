@@ -10,9 +10,10 @@ import java.util.Map;
  */
 public interface JstAccountDAO {
 
-    public long saveAccount(JstAccount account);
-    public long updateAccount(JstAccount account);
-    public JstAccount getAccountByEmpId(@Param("empId") long empId);
-    public JstAccount getAccountByName(String name);
-    public int updatePassword(Map map);
+    long saveAccount(JstAccount account);
+    long updateAccount(JstAccount account);
+    JstAccount getAccountByEmpId(@Param("empId") long empId);
+    JstAccount getAccountByName(String name);
+    int updatePassword(Map map);
+    void deactiveAccount(@Param("empId") long empId);
 }

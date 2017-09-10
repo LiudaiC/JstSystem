@@ -39,4 +39,8 @@ public class JstAccountService {
         map.put("password", password);
         return accountDAO.updatePassword(map);
     }
+
+    public void deactiveAccount(long empId) {
+        accountDAO.deactiveAccount(empId);
+    }
 }

@@ -51,6 +51,13 @@
         WHERE id=#{id}
     </update>
 
+    <update id="deactiveEmployee" parameterType="com.jst.web.model.database.JstEmployee">
+        UPDATE JST_EMPLOYEE
+        SET update_time=#{updateTime},
+        dismission_time=#{dismissionTime}
+        WHERE id=#{id}
+    </update>
+
     <select id="getEmployeeById" parameterType="java.lang.Long" resultMap="employeeMap">
         SELECT * FROM JST_EMPLOYEE WHERE id=#{id};
     </select>
@@ -60,11 +67,11 @@
     </select>
 
     <select id="getEmployeeIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_EMPLOYEE LIMIT #{start}, #{num}
+        SELECT id FROM JST_EMPLOYEE WHERE dismission_time IS NULL LIMIT #{start}, #{num}
     </select>
 
-    <select id="getEmployeeCount" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM JST_EMPLOYEE
+    <select id="getEmployeeCount" parameterType="java.sql.Timestamp" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM JST_EMPLOYEE WHERE dismission_time IS NULL
     </select>
 
 </mapper>

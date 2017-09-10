@@ -29,6 +29,8 @@ public class JstProductManager {
         product.setDiscountPrice(pro.getDiscountPrice());
         product.setOriginalPrice(pro.getOriginalPrice());
         product.setVipPrice(pro.getVipPrice());
+        product.setMemProportion(pro.getMemProportion());
+        product.setPromotionProportion(pro.getPromotionProportion());
         long currTime = System.currentTimeMillis();
         Timestamp stamp = new Timestamp(currTime);
         product.setOpEmployee(empId);

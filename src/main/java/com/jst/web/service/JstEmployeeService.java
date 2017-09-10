@@ -5,6 +5,7 @@ import com.jst.web.model.database.JstEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,5 +44,13 @@ public class JstEmployeeService {
 
     public int getEmployeeCount() {
         return employeeDAO.getEmployeeCount();
+    }
+
+    public void deleteEmployee(Timestamp updateTime, Timestamp dismissionTime, long id) {
+        Map map = new HashMap();
+        map.put("updateTime", updateTime);
+        map.put("dismissionTime", dismissionTime);
+        map.put("id", id);
+        employeeDAO.deactiveEmployee(map);
     }
 }

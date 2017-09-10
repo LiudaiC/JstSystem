@@ -5,6 +5,8 @@ import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.request.RequestEmployee;
 import com.jst.web.model.response.ResponseEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -29,6 +31,12 @@ public class JstEmployeeController {
     @RequestMapping("/employees/{id}")
     public ResponseEmployee getEmployee(@PathVariable("id") long id){
         return employeeManager.getEmployeeById(id);
+    }
+
+    @PostMapping("/employees/{id}")
+    public ResponseEntity deleteEmployee(@PathVariable("id") long id) {
+        employeeManager.deleteEmployee(id);
+        return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     @RequestMapping("/employees/query/{name}")

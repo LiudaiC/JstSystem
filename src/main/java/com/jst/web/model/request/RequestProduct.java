@@ -13,6 +13,10 @@ public class RequestProduct {
     private BigDecimal vipPrice;
     private BigDecimal discountPrice;
     private BigDecimal proportion;
+    // 会员价提成
+    private BigDecimal memProportion;
+    //活动价提成
+    private BigDecimal promotionProportion;
 
     public long getId() {
         return id;
@@ -60,5 +64,35 @@ public class RequestProduct {
 
     public void setProportion(BigDecimal proportion) {
         this.proportion = proportion;
+    }
+
+    public BigDecimal getMemProportion() {
+        return memProportion;
+    }
+
+    public void setMemProportion(BigDecimal memProportion) {
+        this.memProportion = memProportion;
+    }
+
+    public BigDecimal getPromotionProportion() {
+        return promotionProportion;
+    }
+
+    public void setPromotionProportion(BigDecimal promotionProportion) {
+        this.promotionProportion = promotionProportion;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestProduct{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", vipPrice=" + vipPrice +
+                ", discountPrice=" + discountPrice +
+                ", proportion=" + proportion +
+                ", memProportion=" + memProportion +
+                ", promotionProportion=" + promotionProportion +
+                '}';
     }
 }

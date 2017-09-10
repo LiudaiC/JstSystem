@@ -11,7 +11,6 @@ import com.jst.web.service.JstEmployeeService;
 import com.jst.web.service.JstMemberService;
 import com.jst.web.service.JstOrderService;
 import com.jst.web.service.JstProductService;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,14 +71,18 @@ public class JstOrderManager {
         return orderService.getOrderByName(name);
     }
 
-    public Map<String, Object> getOrders(long empId, int page, int num) {
+    public Map<String, Object> getOrders(Map<String, Object> conMap) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total", orderService.getOrderCount());
-        int start = (page - 1)*num;
-        List<Long> ids = orderService.getOrderIds(empId, start, num);
+        int start = ((Integer) conMap.get("page") - 1)*(Integer) conMap.get("num");
+        conMap.put("start", start);
+        List<Long> ids = orderService.getOrderIds(conMap);
         List<ResponseOrder> orders = new ArrayList<ResponseOrder>();
-        ResponseOrder r = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        BigDecimal totalAmount = new BigDecimal(0);
+        BigDecimal realAmount = new BigDecimal(0);
+        BigDecimal proportion = new BigDecimal(10);
+        ResponseOrder r;
         for (long id : ids) {
             JstOrder o = orderService.getOrderById(id);
             if (o.getStatus() != Constant.NORMAL) {
@@ -99,8 +102,20 @@ public class JstOrderManager {
                 JstMember m = memberService.getMemberById(o.getMemberId());
                 r.setMemberName(m.getName());
             }
+            if (!o.getRealPrice().equals(p.getOriginalPrice()) && !o.getRealPrice().equals(p.getVipPrice())) {
+                proportion = p.getPromotionProportion();
+            } else if (o.getMemberId() > 0 && o.getRealPrice().equals(p.getVipPrice())) {
+                proportion = p.getMemProportion();
+            } else if ((Long) conMap.get("empId") > 0){
+                proportion = p.getProportion();
+            }
+            totalAmount = totalAmount.add(o.getRealPrice().multiply(proportion));
+            realAmount = realAmount.add(o.getRealPrice());
             orders.add(r);
         }
+        map.put("orderNum", orders.size());
+        map.put("totalAmount", totalAmount.divide(new BigDecimal(10)));
+        map.put("realAmount", realAmount);
         map.put("list", orders);
         map.put("page", start);
         return map;

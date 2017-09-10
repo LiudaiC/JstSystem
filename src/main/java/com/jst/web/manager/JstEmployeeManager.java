@@ -9,6 +9,7 @@ import com.jst.web.service.JstEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Map;
  * Created by Administrator on 2017/3/9.
  */
 @Component
+@Transactional
 public class JstEmployeeManager {
 
     @Autowired
@@ -31,7 +33,6 @@ public class JstEmployeeManager {
         return accountService.getAccount(empId);
     }
 
-    @Transactional
     public long saveEmployee(RequestEmployee reqEmp) {
         JstEmployee emp = new JstEmployee();
         emp.setName(reqEmp.getName());
@@ -58,11 +59,13 @@ public class JstEmployeeManager {
             accountService.updateAccount(account);
         } else {
             employeeService.saveEmployee(emp);
-            if (accountService.getAccountByName(reqEmp.getAccount()) != null) {
-                return -1;
+            if (!StringUtils.isEmpty(reqEmp.getAccount())) {
+                if (accountService.getAccountByName(reqEmp.getAccount()) != null) {
+                    return -4;
+                }
+                account.setEmpId(emp.getId());
+                accountService.saveAccount(account);
             }
-            account.setEmpId(emp.getId());
-            accountService.saveAccount(account);
         }
         return emp.getId();
     }
@@ -100,6 +103,16 @@ public class JstEmployeeManager {
         map.put("list", emps);
         map.put("page", start);
         return map;
+    }
+
+    public void deleteEmployee(long id) {
+        long currTime = System.currentTimeMillis();
+        Timestamp stamp = new Timestamp(currTime);
+        employeeService.deleteEmployee(stamp, stamp, id);
+        JstAccount account = new JstAccount();
+        account.setEmpId(id);
+        account.setActive(false);
+        accountService.deactiveAccount(id);
     }
 
 }

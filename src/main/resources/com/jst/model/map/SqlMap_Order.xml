@@ -68,9 +68,18 @@
 
     <select id="getOrderIds" parameterType="map" resultType="java.lang.Long">
         SELECT id FROM JST_ORDER
-        <if test="empId &gt; 0">
-            WHERE employee_id = #{empId}
-        </if>
+        <choose>
+            <when test="startTime != null">
+                WHERE add_time &gt; #{startTime}
+                AND add_time &lt; #{endTime}
+                <if test="empId &gt; 0">
+                  AND employee_id = #{empId}
+                </if>
+            </when>
+            <when test="empId &gt; 0">
+                WHERE employee_id = #{empId}
+            </when>
+        </choose>
         LIMIT #{start}, #{num}
     </select>
 

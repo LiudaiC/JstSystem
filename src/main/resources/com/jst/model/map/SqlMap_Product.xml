@@ -11,6 +11,9 @@
         <result property="discountPrice" column="discount_price"/>
         <result property="addTime" column="add_time"/>
         <result property="updateTime" column="update_time"/>
+        <result property="proportion" column="proportion"/>
+        <result property="memProportion" column="mem_proportion"/>
+        <result property="promotionProportion" column="promotion_proportion"/>
     </resultMap>
 
     <insert id="saveProduct" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstProduct">
@@ -22,7 +25,9 @@
             discount_price,
             add_time,
             update_time,
-            proportion
+            proportion,
+            mem_proportion,
+            promotion_proportion
         ) VALUES (
             #{opEmployee},
             #{productName},
@@ -31,7 +36,9 @@
             #{discountPrice},
             #{addTime},
             #{updateTime},
-            #{proportion}
+            #{proportion},
+            #{memProportion},
+            #{promotionProportion}
         );
     </insert>
 
@@ -43,7 +50,9 @@
              vip_price=#{vipPrice},
              discount_price=#{discountPrice},
              update_time=#{updateTime},
-             proportion=#{proportion}
+             proportion=#{proportion},
+             mem_proportion=#{memProportion},
+             promotion_proportion=#{promotionProportion}
         WHERE id=#{id}
     </update>
 

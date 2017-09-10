@@ -37,12 +37,8 @@ public class JstOrderService {
         return orderDAO.getOrderIdsInMonth(map);
     }
 
-    public List<Long> getOrderIds(long empId, int start, int num) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("empId", empId);
-        map.put("start", start);
-        map.put("num", num);
-        return orderDAO.getOrderIds(map);
+    public List<Long> getOrderIds(Map<String, Object> m) {
+        return orderDAO.getOrderIds(m);
     }
 
     public int revokeOrder(long orderId) {

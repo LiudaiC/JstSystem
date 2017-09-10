@@ -17,6 +17,8 @@ public class JstAccount {
     private String password;
     // 上次登录时间
     private Timestamp lastLoginTime;
+    // 是否有效
+    private boolean active = true;
 
     public long getId() {
         return id;
@@ -64,5 +66,13 @@ public class JstAccount {
 
     public void setLastLoginTime(Timestamp lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
