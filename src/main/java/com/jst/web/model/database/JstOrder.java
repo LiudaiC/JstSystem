@@ -33,6 +33,25 @@ public class JstOrder {
     // 订单备注
     private String remark;
 
+    public JstOrder() {
+    }
+
+    public JstOrder(long productId, long employeeId, BigDecimal originalPrice,
+                    BigDecimal discountPrice, BigDecimal vipPrice, BigDecimal realPrice,
+                    Timestamp addTime, Timestamp updateTime, long memberId,
+                    String remark) {
+        this.productId = productId;
+        this.employeeId = employeeId;
+        this.originalPrice = originalPrice;
+        this.discountPrice = discountPrice;
+        this.vipPrice = vipPrice;
+        this.realPrice = realPrice;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
+        this.memberId = memberId;
+        this.remark = remark;
+    }
+
     public long getMemberId() {
         return memberId;
     }

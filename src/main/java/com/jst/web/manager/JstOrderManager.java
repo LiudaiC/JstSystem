@@ -25,6 +25,7 @@ import java.util.*;
  * Created by Administrator on 2017/3/9.
  */
 @Component
+@Transactional
 public class JstOrderManager {
 
     @Autowired
@@ -36,31 +37,26 @@ public class JstOrderManager {
     @Autowired
     private JstEmployeeService empService;
 
-    @Transactional
-    public long saveOrder(long opEmpId, RequestOrder order) {
-        JstOrder jOrder = new JstOrder();
-        JstProduct product = productService.getProductById(order.getProductId());
-        jOrder.setProductId(order.getProductId());
-        jOrder.setDiscountPrice(product.getDiscountPrice());
-        jOrder.setOriginalPrice(product.getOriginalPrice());
-        jOrder.setVipPrice(product.getVipPrice());
-        jOrder.setRealPrice(order.getRealPrice());
-        jOrder.setRemark(order.getRemark());
-        jOrder.setMemberId(order.getMemberId());
-        long currTime = System.currentTimeMillis();
-        Timestamp stamp = new Timestamp(currTime);
-        jOrder.setAddTime(stamp);
-        jOrder.setUpdateTime(stamp);
-        jOrder.setEmployeeId(opEmpId);
-        if (order.getMemberId() > 0 && order.getRealPrice().doubleValue() > 0) {
-            JstMember m = memberService.getMemberById(order.getMemberId());
-            if (m.getBalanceAmount().doubleValue() < order.getRealPrice().doubleValue() ) {
-                return -2;
+    public List<Long> saveOrder(long opEmpId, RequestOrder order) {
+        List<Long> orderIds = new ArrayList<Long>();
+        for (long pid : order.getPids()) {
+            JstProduct product = productService.getProductById(pid);
+            long currTime = System.currentTimeMillis();
+            Timestamp stamp = new Timestamp(currTime);
+            JstOrder jOrder = new JstOrder(pid, opEmpId, product.getOriginalPrice(),
+                    product.getDiscountPrice(), product.getVipPrice(), order.getRealPrice(), stamp, stamp,
+                    order.getMemberId(), order.getRemark());
+            if (order.getMemberId() > 0 && order.getRealPrice().doubleValue() > 0) {
+                JstMember m = memberService.getMemberById(order.getMemberId());
+                if (m.getBalanceAmount().doubleValue() < order.getRealPrice().doubleValue()) {
+                    return Arrays.asList(-2l);
+                }
+                memberService.expense(order.getMemberId(), order.getRealPrice());
             }
-            memberService.expense(order.getMemberId(), order.getRealPrice());
+            orderService.saveOrder(jOrder);
+            orderIds.add(jOrder.getId());
         }
-        orderService.saveOrder(jOrder);
-        return jOrder.getId();
+        return orderIds;
     }
 
     public JstOrder getOrderById (long id) {

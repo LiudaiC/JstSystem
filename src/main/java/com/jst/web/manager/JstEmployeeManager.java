@@ -21,7 +21,6 @@ import java.util.Map;
  * Created by Administrator on 2017/3/9.
  */
 @Component
-@Transactional
 public class JstEmployeeManager {
 
     @Autowired
@@ -33,6 +32,7 @@ public class JstEmployeeManager {
         return accountService.getAccount(empId);
     }
 
+    @Transactional
     public long saveEmployee(RequestEmployee reqEmp) {
         JstEmployee emp = new JstEmployee();
         emp.setName(reqEmp.getName());

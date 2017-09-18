@@ -56,11 +56,11 @@
       <artifactId>fastjson</artifactId>
       <version>1.1.43</version>
     </dependency>
-    <!--Swagger support-->
+    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
     <dependency>
-      <groupId>com.mangofactory</groupId>
-      <artifactId>swagger-springmvc</artifactId>
-      <version>0.9.5</version>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.9</version>
     </dependency>
   </dependencies>
   <build>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,11 +28,10 @@ public class JstOrderController {
     private JstOrderManager orderManager;
 
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public long saveOrder(@RequestBody RequestOrder order, HttpServletRequest req, HttpServletResponse res) {
+    public List<Long> saveOrder(@RequestBody RequestOrder order, HttpServletRequest req, HttpServletResponse res) {
         JstAccount account = JstInterceptor.authenticate(req, res);
         long empId = order.getEmpId() > 0 ? order.getEmpId() : account.getEmpId();
-        long orderId = orderManager.saveOrder(empId, order);
-        return orderId;
+        return orderManager.saveOrder(empId, order);
     }
 
     @RequestMapping("/orders/all")
@@ -42,7 +42,7 @@ public class JstOrderController {
         long empId = account.getAdminRight() > Constant.ALL_RIGHT ? 0 : account.getEmpId();
         Map<String, Object> conditionMap = new HashMap<String, Object>();
         conditionMap.put("startTime", startTime);
-        conditionMap.put("endTime", endTime+" 23:59:59");
+        conditionMap.put("endTime", endTime == null ? null : (endTime +" 23:59:59"));
         conditionMap.put("empId", empId);
         conditionMap.put("page", 1);
         conditionMap.put("num", 10000);

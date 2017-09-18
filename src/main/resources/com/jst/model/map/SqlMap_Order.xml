@@ -80,6 +80,7 @@
                 WHERE employee_id = #{empId}
             </when>
         </choose>
+        ORDER BY update_time DESC
         LIMIT #{start}, #{num}
     </select>
 
