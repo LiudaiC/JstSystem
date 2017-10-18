@@ -35,11 +35,18 @@ public class JstEmployeeService {
         return employeeDAO.getEmployeeByName(name);
     }
 
-    public List<Long> getEmployeeIds(int start, int num) {
+    public List<Long> getActiveEmployeeIds(int start, int num) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("start", start);
         map.put("num", num);
-        return employeeDAO.getEmployeeIds(map);
+        return employeeDAO.getActiveEmployeeIds(map);
+    }
+
+    public List<Long> getAllEmployeeIds(int start, int num) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("start", start);
+        map.put("num", num);
+        return employeeDAO.getActiveEmployeeIds(map);
     }
 
     public int getEmployeeCount() {

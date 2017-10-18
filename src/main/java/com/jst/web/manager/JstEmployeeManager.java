@@ -95,7 +95,7 @@ public class JstEmployeeManager {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total", employeeService.getEmployeeCount());
         int start = (page - 1)*num;
-        List<Long> ids = employeeService.getEmployeeIds(start, num);
+        List<Long> ids = employeeService.getActiveEmployeeIds(start, num);
         List<JstEmployee> emps = new ArrayList<JstEmployee>();
         for (long id : ids) {
             emps.add(employeeService.getEmployeeById(id));

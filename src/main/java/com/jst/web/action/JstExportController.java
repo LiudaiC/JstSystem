@@ -18,7 +18,7 @@ public class JstExportController {
     private JstExportManager exportManager;
 
     @GetMapping("/jst/export")
-    public void export(HttpServletRequest request, HttpServletResponse response) {
+    public void export(HttpServletRequest request, HttpServletResponse response) throws Exception{
         exportManager.export(request, response);
     }
 

@@ -20,4 +20,5 @@ public interface JstOrderDAO {
     int getTotalByMemberId(@Param("memId") long memId);
     List<Long> getOrderIdsByMem(long memId);
     int revokeOrder(@Param("orderId")long orderId);
+    Map<String, Object> getOrderCountAndAmount(Map<String, Object> map);
 }

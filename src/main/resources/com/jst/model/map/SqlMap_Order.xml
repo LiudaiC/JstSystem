@@ -103,4 +103,11 @@
         SELECT id FROM JST_ORDER WHERE member_id=#{memId}
     </select>
 
+    <select id="getOrderCountAndAmount" parameterType="map" resultType="map">
+        SELECT COUNT(1) acount, sum(real_price) amount FROM JST_ORDER
+        WHERE add_time &gt; #{startTime}
+        AND add_time &lt; #{endTime}
+        AND employee_id = #{empId}
+    </select>
+
 </mapper>

@@ -57,4 +57,8 @@ public class JstOrderService {
         return orderDAO.getOrderIdsByMem(memId);
     }
 
+    public Map<String, Object> getOrderCountAndAmount(Map<String, Object> map) {
+        return orderDAO.getOrderCountAndAmount(map);
+    }
+
 }

@@ -14,7 +14,8 @@ public interface JstEmployeeDAO {
     long updateEmployee(JstEmployee emp);
     JstEmployee getEmployeeById(long id);
     JstEmployee getEmployeeByName(String name);
-    List<Long> getEmployeeIds(Map map);
+    List<Long> getActiveEmployeeIds(Map map);
+    List<Long> getAllEmployeeIds(Map map);
     int getEmployeeCount();
     void deactiveEmployee(Map map);
 
