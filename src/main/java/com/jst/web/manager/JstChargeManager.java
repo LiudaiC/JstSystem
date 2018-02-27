@@ -7,6 +7,7 @@ import com.jst.web.service.JstMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,13 @@ public class JstChargeManager {
         if (member == null) {
             return -4;
         }
+        if (charge.getExtraAmount() == null) {
+            charge.setExtraAmount(BigDecimal.ZERO);
+        }
         member.setBalanceAmount(member.getBalanceAmount().add(charge.getChargeAmount()).add(charge.getExtraAmount()));
         member.setExtraAmount(member.getExtraAmount().add(charge.getExtraAmount()));
         member.setChargeAmount(member.getChargeAmount().add(charge.getChargeAmount()));
+        member.setMemDiscount(charge.getMemDiscount());
         Timestamp updateTime = new Timestamp(System.currentTimeMillis());
         member.setUpdateTime(updateTime);
         charge.setChargeTime(updateTime);

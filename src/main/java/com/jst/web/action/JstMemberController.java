@@ -32,8 +32,9 @@ public class JstMemberController {
     }
 
     @RequestMapping("/members/all")
-    public Map<String, Object> getMembers() {
-        return memManager.getMembers(1, 1000);
+    public Map<String, Object> getMembers(HttpServletRequest req) {
+        int page = Integer.valueOf(req.getParameter("page"));
+        return memManager.getMembers(page > 0 ? page : 1, 20000);
     }
 
     @RequestMapping("/members/{id}")

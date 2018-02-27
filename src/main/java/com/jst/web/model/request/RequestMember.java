@@ -12,6 +12,7 @@ public class RequestMember {
     private String cardNo;
     private BigDecimal chargeAmount;
     private BigDecimal extraAmount;
+    private BigDecimal memDiscount;
     private String phone;
     private String password;
     private String remark;
@@ -50,6 +51,14 @@ public class RequestMember {
 
     public BigDecimal getExtraAmount() {
         return extraAmount;
+    }
+
+    public BigDecimal getMemDiscount() {
+        return memDiscount;
+    }
+
+    public void setMemDiscount(BigDecimal memDiscount) {
+        this.memDiscount = memDiscount;
     }
 
     public void setExtraAmount(BigDecimal extraAmount) {

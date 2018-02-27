@@ -185,8 +185,21 @@ public class JstExportManager {
         List<Long> orderIds = orderService.getOrderIds(map);
         for (long oId : orderIds) {
             JstOrder o = orderService.getOrderById(oId);
-            JstProduct p = productService.getProductById(o.getProductId());
-            List<String> info = Arrays.asList(empName, p.getProductName(),
+            String pid = o.getProductId();
+            String productName = "";
+            int a = pid.split(", ").length;
+            if (a > 1) {
+                List<String> names = new ArrayList<String>();
+                for (String i : pid.split(", ")) {
+                    JstProduct p = productService.getProductById(Long.valueOf(i));
+                    names.add(p.getProductName());
+                }
+                productName = names.toString().substring(1, names.toString().length() - 1);
+            } else {
+                JstProduct p = productService.getProductById(Long.valueOf(o.getProductId()));
+                productName = p.getProductName();
+            }
+            List<String> info = Arrays.asList(empName, productName,
                     sdf.format(o.getAddTime()), o.getRealPrice().toString(), o.getRemark() == null ? "" : o.getRemark());
             data.add(info);
         }
@@ -203,8 +216,21 @@ public class JstExportManager {
             String cusmeInfo = "";
             for (int i = 0, l = orderIds.size(); i < l; i++) {
                 JstOrder o = orderService.getOrderById(orderIds.get(i));
-                JstProduct p = productService.getProductById(o.getProductId());
-                cusmeInfo += sdf.format(o.getAddTime()) + ", " + p.getProductName()
+                String pid = o.getProductId();
+                String productName = "";
+                int a = pid.split(", ").length;
+                if (a > 1) {
+                    List<String> names = new ArrayList<String>();
+                    for (String j : pid.split(", ")) {
+                        JstProduct p = productService.getProductById(Long.valueOf(j));
+                        names.add(p.getProductName());
+                    }
+                    productName = names.toString().substring(1, names.toString().length() - 1);
+                } else {
+                    JstProduct p = productService.getProductById(Long.valueOf(o.getProductId()));
+                    productName = p.getProductName();
+                }
+                cusmeInfo += sdf.format(o.getAddTime()) + ", " + productName
                         + (StringUtils.isEmpty(o.getRemark()) ? "" : (", " + o.getRemark())) + (i == l - 1 ? "" : "\r\n");
             }
             String chargeInfo = "";

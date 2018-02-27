@@ -8,6 +8,7 @@
         <result property="chargeAmount" column="charge_amount"/>
         <result property="extraAmount" column="extra_amount"/>
         <result property="chargeTime" column="charge_time"/>
+        <result property="memDiscount" column="mem_discount"/>
         <result property="remark" column="remark"/>
     </resultMap>
 
@@ -17,12 +18,14 @@
         charge_amount,
         extra_amount,
         charge_time,
+        mem_discount,
         remark
         ) VALUES (
         #{memberId},
         #{chargeAmount},
         #{extraAmount},
         #{chargeTime},
+        #{memDiscount},
         #{remark}
         );
     </insert>

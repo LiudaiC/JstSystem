@@ -11,7 +11,7 @@ public class JstOrder {
     // 订单id
     private long id;
     // 产品id
-    private long productId;
+    private String productId;
     // 员工id
     private long employeeId;
     // 原价
@@ -36,7 +36,7 @@ public class JstOrder {
     public JstOrder() {
     }
 
-    public JstOrder(long productId, long employeeId, BigDecimal originalPrice,
+    public JstOrder(String productId, long employeeId, BigDecimal originalPrice,
                     BigDecimal discountPrice, BigDecimal vipPrice, BigDecimal realPrice,
                     Timestamp addTime, Timestamp updateTime, long memberId,
                     String remark) {
@@ -68,11 +68,11 @@ public class JstOrder {
         this.id = id;
     }
 
-    public long getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 

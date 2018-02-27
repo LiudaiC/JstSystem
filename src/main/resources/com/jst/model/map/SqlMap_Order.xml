@@ -100,7 +100,7 @@
     </select>
 
     <select id="getOrderIdsByMem" parameterType="java.lang.Long" resultType="java.lang.Long">
-        SELECT id FROM JST_ORDER WHERE member_id=#{memId}
+        SELECT id FROM JST_ORDER WHERE member_id=#{memId} and status=0
     </select>
 
     <select id="getOrderCountAndAmount" parameterType="map" resultType="map">

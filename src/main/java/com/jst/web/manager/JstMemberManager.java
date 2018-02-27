@@ -51,6 +51,7 @@ public class JstMemberManager {
         member.setPhone(mem.getPhone());
         member.setCardNo(mem.getCardNo());
         member.setChargeAmount(mem.getChargeAmount());
+        member.setMemDiscount(mem.getMemDiscount());
         member.setPassword(mem.getPassword());
         long currTime = System.currentTimeMillis();
         Timestamp stamp = new Timestamp(currTime);
@@ -109,6 +110,7 @@ public class JstMemberManager {
             BeanUtils.copyProperties(member,resMem);
             resMem.setConsumeCount(orderService.getTotalByMemberId(id));
             resMem.setConsumeNum(member.getExpenseAmount().intValue());
+            resMem.setMemDiscount(member.getMemDiscount());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             resMem.setRegisterTime(sdf.format(member.getRegisterTime()));
             members.add(resMem);
@@ -132,8 +134,21 @@ public class JstMemberManager {
             for (long id:ids) {
                 order = new ResponseOrder();
                 jstOrder = orderService.getOrderById(id);
-                JstProduct product = productService.getProductById(jstOrder.getProductId());
-                order.setProductName(product.getProductName());
+                String pid = jstOrder.getProductId();
+                String productName = "";
+                int a = pid.split(", ").length;
+                if (a > 1) {
+                    List<String> names = new ArrayList<String>();
+                    for (String i : pid.split(", ")) {
+                        JstProduct p = productService.getProductById(Long.valueOf(i));
+                        names.add(p.getProductName());
+                    }
+                    productName = names.toString().substring(1, names.toString().length() - 1);
+                } else {
+                    JstProduct p = productService.getProductById(Long.valueOf(jstOrder.getProductId()));
+                    productName = p.getProductName();
+                }
+                order.setProductName(productName);
                 order.setRealPrice(jstOrder.getRealPrice());
                 order.setOrderTime(sdf.format(jstOrder.getAddTime()));
                 orderList.add(order);

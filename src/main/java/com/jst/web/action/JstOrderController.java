@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +27,7 @@ public class JstOrderController {
     private JstOrderManager orderManager;
 
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public List<Long> saveOrder(@RequestBody RequestOrder order, HttpServletRequest req, HttpServletResponse res) {
+    public long saveOrder(@RequestBody RequestOrder order, HttpServletRequest req, HttpServletResponse res) {
         JstAccount account = JstInterceptor.authenticate(req, res);
         long empId = order.getEmpId() > 0 ? order.getEmpId() : account.getEmpId();
         return orderManager.saveOrder(empId, order);
@@ -39,13 +38,14 @@ public class JstOrderController {
         JstAccount account = JstInterceptor.authenticate(req, res);
         String startTime = req.getParameter("start");
         String endTime = req.getParameter("end");
+        int page = Integer.valueOf(req.getParameter("page"));
         long empId = account.getAdminRight() > Constant.ALL_RIGHT ? 0 : account.getEmpId();
         Map<String, Object> conditionMap = new HashMap<String, Object>();
         conditionMap.put("startTime", startTime);
         conditionMap.put("endTime", endTime == null ? null : (endTime +" 23:59:59"));
         conditionMap.put("empId", empId);
-        conditionMap.put("page", 1);
-        conditionMap.put("num", 10000);
+        conditionMap.put("page", page > 0 ? page : 1);
+        conditionMap.put("num", 20000);
         return orderManager.getOrders(conditionMap);
     }
 
@@ -58,9 +58,10 @@ public class JstOrderController {
         Map<String, Object> conditionMap = new HashMap<String, Object>();
         conditionMap.put("startTime", startTime);
         conditionMap.put("endTime", endTime+" 23:59:59");
+
         conditionMap.put("empId", empId);
         conditionMap.put("page", 1);
-        conditionMap.put("num", 1000);
+        conditionMap.put("num", 10000);
         map = orderManager.getOrders(conditionMap);
         return map;
     }
@@ -88,12 +89,13 @@ public class JstOrderController {
     }
 
     @RequestMapping("/orders")
-    public Map<String, Object> getOrders(int page, int num) {
+    public Map<String, Object> getOrders(HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        int page = Integer.valueOf(req.getParameter("page"));
         Map<String, Object> conditionMap = new HashMap<String, Object>();
         conditionMap.put("empId", 0);
-        conditionMap.put("page", 1);
-        conditionMap.put("num", 1000);
+        conditionMap.put("page", page > 0 ? page : 1);
+        conditionMap.put("num", 20000);
         map = orderManager.getOrders(conditionMap);
         return map;
     }

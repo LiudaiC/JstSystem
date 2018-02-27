@@ -20,6 +20,8 @@ public class ResponseMember {
     private BigDecimal expenseAmount;
     // 余额
     private BigDecimal balanceAmount;
+    //会员折扣
+    private BigDecimal memDiscount;
     // 姓名
     private String name;
     // 联系方式
@@ -91,6 +93,14 @@ public class ResponseMember {
 
     public void setBalanceAmount(BigDecimal balanceAmount) {
         this.balanceAmount = balanceAmount;
+    }
+
+    public BigDecimal getMemDiscount() {
+        return memDiscount;
+    }
+
+    public void setMemDiscount(BigDecimal memDiscount) {
+        this.memDiscount = memDiscount;
     }
 
     public String getName() {

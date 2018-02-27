@@ -12,6 +12,7 @@ public class JstCharge {
     private long memberId;
     private BigDecimal chargeAmount;
     private BigDecimal extraAmount;
+    private BigDecimal memDiscount;
     private Timestamp chargeTime;
     private String remark;
 
@@ -45,6 +46,14 @@ public class JstCharge {
 
     public void setExtraAmount(BigDecimal extraAmount) {
         this.extraAmount = extraAmount;
+    }
+
+    public BigDecimal getMemDiscount() {
+        return memDiscount;
+    }
+
+    public void setMemDiscount(BigDecimal memDiscount) {
+        this.memDiscount = memDiscount;
     }
 
     public Timestamp getChargeTime() {

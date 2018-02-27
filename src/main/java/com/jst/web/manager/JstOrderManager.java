@@ -37,26 +37,34 @@ public class JstOrderManager {
     @Autowired
     private JstEmployeeService empService;
 
-    public List<Long> saveOrder(long opEmpId, RequestOrder order) {
-        List<Long> orderIds = new ArrayList<Long>();
+    public long saveOrder(long opEmpId, RequestOrder order) {
+        BigDecimal originalPrice = BigDecimal.ZERO;
+        BigDecimal discountPrice = BigDecimal.ZERO;
+        BigDecimal vipPrice = BigDecimal.ZERO;
+        BigDecimal memDiscount = BigDecimal.ONE;
+        if (order.getMemberId() > 0 && order.getRealPrice().doubleValue() > 0) {
+            JstMember m = memberService.getMemberById(order.getMemberId());
+            if (m.getBalanceAmount().doubleValue() < order.getRealPrice().doubleValue()) {
+                return -2l;
+            }
+            memDiscount = m.getMemDiscount();
+            memberService.expense(order.getMemberId(), order.getRealPrice());
+        }
         for (long pid : order.getPids()) {
             JstProduct product = productService.getProductById(pid);
-            long currTime = System.currentTimeMillis();
-            Timestamp stamp = new Timestamp(currTime);
-            JstOrder jOrder = new JstOrder(pid, opEmpId, product.getOriginalPrice(),
-                    product.getDiscountPrice(), product.getVipPrice(), order.getRealPrice(), stamp, stamp,
-                    order.getMemberId(), order.getRemark());
-            if (order.getMemberId() > 0 && order.getRealPrice().doubleValue() > 0) {
-                JstMember m = memberService.getMemberById(order.getMemberId());
-                if (m.getBalanceAmount().doubleValue() < order.getRealPrice().doubleValue()) {
-                    return Arrays.asList(-2l);
-                }
-                memberService.expense(order.getMemberId(), order.getRealPrice());
-            }
-            orderService.saveOrder(jOrder);
-            orderIds.add(jOrder.getId());
+            originalPrice.add(product.getOriginalPrice());
+            discountPrice.add(product.getDiscountPrice());
+            vipPrice.add(product.getVipPrice());
         }
-        return orderIds;
+        String pidStr = order.getPids().toString();
+        pidStr = pidStr.substring(1, pidStr.length() - 1);
+        long currTime = System.currentTimeMillis();
+        Timestamp stamp = new Timestamp(currTime);
+        JstOrder jOrder = new JstOrder(pidStr, opEmpId, originalPrice,
+                discountPrice, vipPrice, order.getRealPrice(), stamp, stamp,
+                order.getMemberId(), order.getRemark());
+        orderService.saveOrder(jOrder);
+        return jOrder.getId();
     }
 
     public JstOrder getOrderById (long id) {
@@ -69,7 +77,8 @@ public class JstOrderManager {
 
     public Map<String, Object> getOrders(Map<String, Object> conMap) {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("total", orderService.getOrderCount());
+        int total = orderService.getOrderCount();
+        map.put("total", total);
         int start = ((Integer) conMap.get("page") - 1)*(Integer) conMap.get("num");
         conMap.put("start", start);
         List<Long> ids = orderService.getOrderIds(conMap);
@@ -84,9 +93,31 @@ public class JstOrderManager {
             if (o.getStatus() != Constant.NORMAL) {
                 continue;
             }
-            JstProduct p = productService.getProductById(o.getProductId());
+            String pid = o.getProductId();
+            String productName = "";
+            BigDecimal originalPrice = BigDecimal.ZERO;
+            BigDecimal discountPrice = BigDecimal.ZERO;
+            BigDecimal vipPrice = BigDecimal.ZERO;
+            int a = pid.split(", ").length;
+            if (a > 1) {
+                List<String> names = new ArrayList<String>();
+                for (String i : pid.split(", ")) {
+                    JstProduct p = productService.getProductById(Long.valueOf(i));
+                    names.add(p.getProductName());
+                    originalPrice.add(p.getOriginalPrice());
+                    discountPrice.add(p.getDiscountPrice());
+                    vipPrice.add(p.getVipPrice());
+                }
+                productName = names.toString().substring(1, names.toString().length() - 1);
+            } else {
+                JstProduct p = productService.getProductById(Long.valueOf(o.getProductId()));
+                productName = p.getProductName();
+                originalPrice.add(p.getOriginalPrice());
+                discountPrice.add(p.getDiscountPrice());
+                vipPrice.add(p.getVipPrice());
+            }
             r = new ResponseOrder();
-            r.setProductName(p.getProductName());
+            r.setProductName(productName);
             r.setRealPrice(o.getRealPrice());
             r.setStatus(o.getStatus());
             r.setRemark(o.getRemark());
@@ -98,13 +129,6 @@ public class JstOrderManager {
                 JstMember m = memberService.getMemberById(o.getMemberId());
                 r.setMemberName(m.getName());
             }
-            if (!o.getRealPrice().equals(p.getOriginalPrice()) && !o.getRealPrice().equals(p.getVipPrice())) {
-                proportion = p.getPromotionProportion();
-            } else if (o.getMemberId() > 0 && o.getRealPrice().equals(p.getVipPrice())) {
-                proportion = p.getMemProportion();
-            } else if ((Long) conMap.get("empId") > 0){
-                proportion = p.getProportion();
-            }
             totalAmount = totalAmount.add(o.getRealPrice().multiply(proportion));
             realAmount = realAmount.add(o.getRealPrice());
             orders.add(r);
@@ -113,7 +137,7 @@ public class JstOrderManager {
         map.put("totalAmount", totalAmount.divide(new BigDecimal(10)));
         map.put("realAmount", realAmount);
         map.put("list", orders);
-        map.put("page", start);
+        map.put("page", total/20);
         return map;
     }
 
@@ -132,9 +156,19 @@ public class JstOrderManager {
             for (long id : ids) {
                 order = orderService.getOrderById(id);
                 if (order != null && order.getStatus() == Constant.NORMAL)  {
-                    JstProduct product = productService.getProductById(order.getProductId());
-                    proportion = proportion.doubleValue() < 10 ? product.getProportion() : proportion;
-                    totalAmount = totalAmount.add(product.getOriginalPrice().multiply(proportion));
+                    String pid = order.getProductId();
+                    BigDecimal originalPrice = BigDecimal.ZERO;
+                    int a = pid.split(", ").length;
+                    if (a > 1) {
+                        for (String i : pid.split(", ")) {
+                            JstProduct p = productService.getProductById(Long.valueOf(i));
+                            originalPrice.add(p.getOriginalPrice());
+                        }
+                    } else {
+                        JstProduct p = productService.getProductById(Long.valueOf(order.getProductId()));
+                        originalPrice.add(p.getOriginalPrice());
+                    }
+                    totalAmount = totalAmount.add(originalPrice.multiply(proportion));
                     realAmount = realAmount.add(order.getRealPrice());
                 }
             }
