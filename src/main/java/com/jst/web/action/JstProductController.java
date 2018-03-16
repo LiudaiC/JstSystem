@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.jst.web.constant.Constant.PAGE_NUM;
+
 /**
  * Created by Administrator on 2017/3/9.
  */
@@ -24,7 +26,7 @@ public class JstProductController {
     @Autowired
     private JstProductManager productManager;
 
-    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    @PostMapping(value = "/products")
     public long saveProduct(@RequestBody RequestProduct requestProduct, HttpServletRequest req, HttpServletResponse res) {
         JstAccount account = JstInterceptor.authenticate(req, res);
         double proportion = requestProduct.getProportion().doubleValue();
@@ -40,19 +42,25 @@ public class JstProductController {
         return productManager.getProduct(id);
     }
 
-    @RequestMapping("/products/query/{name}")
+    @GetMapping("/products/query/{name}")
     public List<JstProduct> getProduct(@PathVariable("name") String name){
         return productManager.getProductByName(name);
     }
 
-    @RequestMapping("/products/all")
-    public Map<String, Object> getProducts() {
+    @GetMapping("/products/all")
+    public Map<String, Object> getAllProducts() {
+        return productManager.getProducts(1, Integer.MAX_VALUE);
+    }
+
+    @GetMapping("/products")
+    public Map<String, Object> getProducts(HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
-        map = productManager.getProducts(0, 0);
+        int page = Integer.valueOf(req.getParameter("page"));
+        map = productManager.getProducts(page > 0 ? page : 1, PAGE_NUM);
         return map;
     }
 
-    @RequestMapping(value = "/products/{page}/{num}", method = RequestMethod.GET)
+    @GetMapping(value = "/products/{page}/{num}")
     public Map<String, Object> getProducts(@PathVariable("page") int page, @PathVariable("num") int num) {
         Map<String, Object> map = new HashMap<String, Object>();
         map = productManager.getProducts(page, num);

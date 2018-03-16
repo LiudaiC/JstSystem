@@ -30,6 +30,10 @@ public class JstOrder {
     private long memberId;
     // 订单状态
     private int status;
+    // 服务评级
+    private int resultLevel;
+    // 额外提成
+    private int extraProportion;
     // 订单备注
     private String remark;
 
@@ -38,8 +42,8 @@ public class JstOrder {
 
     public JstOrder(String productId, long employeeId, BigDecimal originalPrice,
                     BigDecimal discountPrice, BigDecimal vipPrice, BigDecimal realPrice,
-                    Timestamp addTime, Timestamp updateTime, long memberId,
-                    String remark) {
+                    Timestamp addTime, Timestamp updateTime, long memberId, int resultLevel,
+                    int extraProportion, String remark) {
         this.productId = productId;
         this.employeeId = employeeId;
         this.originalPrice = originalPrice;
@@ -49,6 +53,8 @@ public class JstOrder {
         this.addTime = addTime;
         this.updateTime = updateTime;
         this.memberId = memberId;
+        this.resultLevel = resultLevel;
+        this.extraProportion = extraProportion;
         this.remark = remark;
     }
 
@@ -140,6 +146,22 @@ public class JstOrder {
         this.status = status;
     }
 
+    public int getResultLevel() {
+        return resultLevel;
+    }
+
+    public void setResultLevel(int resultLevel) {
+        this.resultLevel = resultLevel;
+    }
+
+    public int getExtraProportion() {
+        return extraProportion;
+    }
+
+    public void setExtraProportion(int extraProportion) {
+        this.extraProportion = extraProportion;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -161,6 +183,8 @@ public class JstOrder {
                 ", addTime=" + addTime +
                 ", updateTime=" + updateTime +
                 ", memberId=" + memberId +
+                ", resultLevel=" + resultLevel +
+                ", extraProportion=" + extraProportion +
                 ", remark='" + remark + '\'' +
                 '}';
     }

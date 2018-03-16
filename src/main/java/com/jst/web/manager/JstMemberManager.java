@@ -99,7 +99,7 @@ public class JstMemberManager {
     public Map<String, Object> getMembers(int page, int num) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total", memberService.getMemberCount());
-        int start = (page - 1)*num;
+        int start = (page - 1) * num;
         List<Long> ids = memberService.getMemberIds(start, num);
         List<ResponseMember> members = new ArrayList<ResponseMember>();
         JstMember member = null;

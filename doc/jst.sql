@@ -5,9 +5,21 @@ CREATE TABLE jst_account
     login_name VARCHAR(30) NOT NULL COMMENT '登录账号',
     password VARCHAR(20) NOT NULL COMMENT '登录密码',
     admin_right INT(11) COMMENT '账号权限',
-    last_login_time DATETIME COMMENT '上次登录时间'
+    last_login_time DATETIME COMMENT '上次登录时间',
+    active TINYINT(4) DEFAULT '1'
 );
 CREATE UNIQUE INDEX emp_id ON jst_account (emp_id);
+CREATE TABLE jst_charge
+(
+    id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    mem_id BIGINT(20) NOT NULL COMMENT '会员id',
+    charge_amount DECIMAL(12,2) NOT NULL COMMENT '充值金额',
+    extra_amount DECIMAL(12,2) NOT NULL COMMENT '赠送金额',
+    charge_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '充值时间',
+    remark TEXT COMMENT ' 充值备注',
+    mem_discount DECIMAL(3,2) DEFAULT '1.00' COMMENT '会员折扣'
+);
+CREATE INDEX mem_id ON jst_charge (mem_id);
 CREATE TABLE jst_employee
 (
     id BIGINT(20) PRIMARY KEY NOT NULL COMMENT '员工id' AUTO_INCREMENT,
@@ -25,7 +37,7 @@ CREATE TABLE jst_member
 (
     id BIGINT(20) PRIMARY KEY NOT NULL COMMENT '会员id' AUTO_INCREMENT,
     phone VARCHAR(11) NOT NULL COMMENT '会员电话',
-    name VARCHAR(30) NOT NULL COMMENT '会员姓名',
+    name VARCHAR(30),
     password VARCHAR(100) DEFAULT '123456',
     register_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
     update_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -35,13 +47,15 @@ CREATE TABLE jst_member
     expense_amount DECIMAL(12,2) NOT NULL COMMENT '消费金额',
     canceled_time DATETIME COMMENT '注销时间',
     emp_id BIGINT(20) NOT NULL COMMENT '操作员工id',
-    balance_amount DECIMAL(12,2) NOT NULL COMMENT '账户余额'
+    balance_amount DECIMAL(12,2) NOT NULL COMMENT '账户余额',
+    remark TEXT COMMENT '症状备注',
+    extra_amount DECIMAL(12,2) DEFAULT '0.00' COMMENT '赠送金额',
+    mem_discount DECIMAL(3,2) DEFAULT '1.00' COMMENT '会员折扣'
 );
-CREATE UNIQUE INDEX card_no ON jst_member (card_no);
 CREATE TABLE jst_order
 (
     id BIGINT(20) PRIMARY KEY NOT NULL COMMENT '订单id' AUTO_INCREMENT,
-    product_id BIGINT(20) NOT NULL COMMENT '产品id',
+    product_id VARCHAR(30),
     original_price DECIMAL(12,2) NOT NULL COMMENT '原价',
     discount_price DECIMAL(12,2) NOT NULL COMMENT '优惠价',
     real_price DECIMAL(12,2) NOT NULL COMMENT '实收价',
@@ -50,7 +64,10 @@ CREATE TABLE jst_order
     remark TEXT COMMENT '订单备注',
     vip_price DECIMAL(12,2) DEFAULT '0.00' NOT NULL COMMENT '会员价',
     employee_id BIGINT(20) NOT NULL COMMENT '操作员工id',
-    member_id BIGINT(20) DEFAULT '0' COMMENT '会员id'
+    member_id BIGINT(20) DEFAULT '0' COMMENT '会员id',
+    status TINYINT(2) DEFAULT '0' COMMENT '订单状态',
+    result_level TINYINT(4) DEFAULT '0' COMMENT '服务评级',
+    extra_proportion TINYINT(4) DEFAULT '0' COMMENT '好评提成'
 );
 CREATE TABLE jst_product
 (
@@ -61,5 +78,17 @@ CREATE TABLE jst_product
     vip_price DECIMAL(12,2) NOT NULL COMMENT '会员价',
     discount_price DECIMAL(12,2) NOT NULL COMMENT '优惠价',
     add_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '新增时间',
-    update_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间'
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+    proportion DECIMAL(2,1) DEFAULT '0.0' COMMENT '症状备注',
+    promotion_proportion DECIMAL(2,1) DEFAULT '0.0' NOT NULL COMMENT '活动价提成',
+    mem_proportion DECIMAL(2,1) DEFAULT '0.0' NOT NULL COMMENT '会员价提成'
 );
+CREATE TABLE jst_recharge
+(
+    mem_id BIGINT(20) NOT NULL COMMENT '会员id',
+    charge_amount DECIMAL(12,2) NOT NULL COMMENT '充值金额',
+    extra_amount DECIMAL(12,2) NOT NULL COMMENT '赠送金额',
+    charge_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '充值时间',
+    id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT
+);
+CREATE UNIQUE INDEX mem_id ON jst_recharge (mem_id);

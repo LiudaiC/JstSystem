@@ -49,6 +49,9 @@ public class JstCharge {
     }
 
     public BigDecimal getMemDiscount() {
+        if (memDiscount == null) {
+            memDiscount = BigDecimal.ONE;
+        }
         return memDiscount;
     }
 

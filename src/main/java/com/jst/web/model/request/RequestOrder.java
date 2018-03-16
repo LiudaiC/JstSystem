@@ -14,6 +14,8 @@ public class RequestOrder {
     private long memberId;
     private long empId;
     private BigDecimal realPrice;
+    private int resultLevel;
+    private int extraProportion;
     private String remark;
 
     public long getProductId() {
@@ -55,6 +57,22 @@ public class RequestOrder {
 
     public void setRealPrice(BigDecimal realPrice) {
         this.realPrice = realPrice;
+    }
+
+    public int getResultLevel() {
+        return resultLevel;
+    }
+
+    public int getExtraProportion() {
+        return extraProportion;
+    }
+
+    public void setExtraProportion(int extraProportion) {
+        this.extraProportion = extraProportion;
+    }
+
+    public void setResultLevel(int resultLevel) {
+        this.resultLevel = resultLevel;
     }
 
     public String getRemark() {

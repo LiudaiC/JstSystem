@@ -16,8 +16,10 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.jst.web.constant.Constant.PAGE_NUM;
+
 /**
- * Created by Administrator on 2017/3/9.
+ * Created by Administrator on PAGE_NUM17/3/9.
  */
 @RestController
 @RequestMapping("/jst")
@@ -45,7 +47,7 @@ public class JstOrderController {
         conditionMap.put("endTime", endTime == null ? null : (endTime +" 23:59:59"));
         conditionMap.put("empId", empId);
         conditionMap.put("page", page > 0 ? page : 1);
-        conditionMap.put("num", 20000);
+        conditionMap.put("num", PAGE_NUM);
         return orderManager.getOrders(conditionMap);
     }
 
@@ -61,7 +63,7 @@ public class JstOrderController {
 
         conditionMap.put("empId", empId);
         conditionMap.put("page", 1);
-        conditionMap.put("num", 10000);
+        conditionMap.put("num", PAGE_NUM);
         map = orderManager.getOrders(conditionMap);
         return map;
     }
@@ -92,10 +94,14 @@ public class JstOrderController {
     public Map<String, Object> getOrders(HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         int page = Integer.valueOf(req.getParameter("page"));
+        String startTime = req.getParameter("start");
+        String endTime = req.getParameter("end");
         Map<String, Object> conditionMap = new HashMap<String, Object>();
+        conditionMap.put("startTime", startTime);
+        conditionMap.put("endTime", endTime+" 23:59:59");
         conditionMap.put("empId", 0);
         conditionMap.put("page", page > 0 ? page : 1);
-        conditionMap.put("num", 20000);
+        conditionMap.put("num", PAGE_NUM);
         map = orderManager.getOrders(conditionMap);
         return map;
     }

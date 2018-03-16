@@ -65,10 +65,7 @@
     </select>
 
     <select id="getProductIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_PRODUCT
-        <if test="start &gt; 0 and num &gt; 0">
-            LIMIT #{start}, #{num}
-        </if>
+        SELECT id FROM JST_PRODUCT LIMIT #{start}, #{num}
     </select>
 
     <select id="getProductCount" resultType="java.lang.Integer">

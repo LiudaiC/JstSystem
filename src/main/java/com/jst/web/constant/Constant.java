@@ -38,4 +38,7 @@ public class Constant {
     // 订单状态正常
     public static final int NORMAL = 0;
 
+    // 每页查询数目
+    public static final int PAGE_NUM = 30;
+
 }

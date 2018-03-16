@@ -62,7 +62,8 @@ public class JstOrderManager {
         Timestamp stamp = new Timestamp(currTime);
         JstOrder jOrder = new JstOrder(pidStr, opEmpId, originalPrice,
                 discountPrice, vipPrice, order.getRealPrice(), stamp, stamp,
-                order.getMemberId(), order.getRemark());
+                order.getMemberId(), order.getResultLevel(), order.getExtraProportion()
+                , order.getRemark());
         orderService.saveOrder(jOrder);
         return jOrder.getId();
     }
@@ -90,9 +91,6 @@ public class JstOrderManager {
         ResponseOrder r;
         for (long id : ids) {
             JstOrder o = orderService.getOrderById(id);
-            if (o.getStatus() != Constant.NORMAL) {
-                continue;
-            }
             String pid = o.getProductId();
             String productName = "";
             BigDecimal originalPrice = BigDecimal.ZERO;
