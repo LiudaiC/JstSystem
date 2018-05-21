@@ -13,7 +13,7 @@
     </resultMap>
 
     <insert id="saveCharge" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstCharge">
-        INSERT  INTO JST_CHARGE (
+        INSERT  INTO jst_charge (
         mem_id,
         charge_amount,
         extra_amount,
@@ -31,7 +31,7 @@
     </insert>
 
     <select id="getChargeListByMemberId" parameterType="java.lang.Long" resultMap="chargeMap">
-        SELECT * FROM JST_CHARGE WHERE mem_id=#{memId} ORDER BY charge_time
+        SELECT * FROM jst_charge WHERE mem_id=#{memId} ORDER BY charge_time
     </select>
 
 

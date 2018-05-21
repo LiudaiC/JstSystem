@@ -1,10 +1,8 @@
 package com.jst.web.dao;
 
-import com.jst.web.model.database.JstEmployee;
 import com.jst.web.model.database.JstMember;
 import org.apache.ibatis.annotations.Param;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -22,5 +20,6 @@ public interface JstMemberDAO {
     public int getMemberCount();
     public int expense(Map map);
     public int revokeMember(long id);
+    public JstMember queryMember(String query);
 
 }

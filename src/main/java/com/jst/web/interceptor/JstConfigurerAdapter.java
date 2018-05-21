@@ -1,6 +1,5 @@
 package com.jst.web.interceptor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -15,6 +14,6 @@ public class JstConfigurerAdapter extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JstInterceptor())
                 .addPathPatterns("/jst/*")
-                .excludePathPatterns("/jst/index", "/index.html", "/jst/logout", "/jst/login");
+                .excludePathPatterns("/jst/index", "/jst/index.html", "/jst/logout", "/jst/login");
     }
 }

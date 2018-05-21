@@ -68,6 +68,13 @@ public class JstMemberController {
         return map;
     }
 
+    @GetMapping(value = "/members/info")
+    public JstMember getInfo(HttpServletRequest req) {
+        String query = req.getParameter("query");
+        JstMember member = memManager.queryMember(query);
+        return member;
+    }
+
     @PostMapping(value = "/members/revoke")
     public int revokeMember(@RequestBody CommonRequest request) {
         return memManager.revokeMember(request.getId());

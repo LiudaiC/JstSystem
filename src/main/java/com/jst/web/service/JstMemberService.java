@@ -60,4 +60,8 @@ public class JstMemberService {
     public int revokeMember(long id) {
         return memberDao.revokeMember(id);
     }
+
+    public JstMember queryMember(String query) {
+        return memberDao.queryMember(query);
+    }
 }

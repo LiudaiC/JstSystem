@@ -96,6 +96,10 @@ public class JstMemberManager {
         return list;
     }
 
+    public JstMember queryMember(String query) {
+        return memberService.queryMember(query);
+    }
+
     public Map<String, Object> getMembers(int page, int num) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total", memberService.getMemberCount());

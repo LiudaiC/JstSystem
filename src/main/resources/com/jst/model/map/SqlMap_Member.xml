@@ -22,7 +22,7 @@
     </resultMap>
 
     <insert id="saveMember" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstMember">
-        INSERT  INTO JST_MEMBER (
+        INSERT  INTO jst_member (
             emp_id,
             name,
             phone,
@@ -58,7 +58,7 @@
     </insert>
 
     <update id="updateMember" parameterType="com.jst.web.model.database.JstMember">
-        UPDATE JST_MEMBER
+        UPDATE jst_member
         SET emp_id = #{empId},
             name = #{name},
             phone = #{phone},
@@ -77,37 +77,42 @@
     </update>
 
     <select id="getMemberById" parameterType="java.lang.Long" resultMap="memberMap">
-        SELECT * FROM JST_MEMBER WHERE id=#{id}
+        SELECT * FROM jst_member WHERE id=#{id}
     </select>
 
     <select id="getMemberByCardNo" parameterType="java.lang.String" resultMap="memberMap">
-        SELECT * FROM JST_MEMBER WHERE card_no=#{cardNo} AND status=0
+        SELECT * FROM jst_member WHERE card_no=#{cardNo} AND status=0
     </select>
 
     <select id="getMemberIdsByName" parameterType="java.lang.String" resultType="java.lang.Long">
-        SELECT id FROM JST_MEMBER WHERE  status=0 AND
+        SELECT id FROM jst_member WHERE  status=0 AND
          concat(name, card_no, phone) LIKE '%${name}%'
     </select>
 
+    <select id="queryMember" parameterType="java.lang.String" resultMap="memberMap">
+        SELECT * FROM jst_member WHERE  status=0 AND
+        concat(name, card_no, phone) LIKE '%${query}%'
+    </select>
+
     <select id="getMemberIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_MEMBER
+        SELECT id FROM jst_member
         ORDER BY status ASC, register_time DESC
         LIMIT #{start}, #{num}
     </select>
 
     <select id="getMemberCount" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM JST_MEMBER
+        SELECT COUNT(1) FROM jst_member
     </select>
 
     <update id="expense" parameterType="map">
-        UPDATE JST_MEMBER SET
+        UPDATE jst_member SET
          balance_amount = balance_amount - #{expense},
          expense_amount = expense_amount + #{expense}
         WHERE id=#{id};
     </update>
 
     <update id="revokeMember" parameterType="java.lang.Long">
-        UPDATE JST_MEMBER SET status=1 WHERE id=#{id}
+        UPDATE jst_member SET status=1 WHERE id=#{id}
     </update>
 
 </mapper>

@@ -13,7 +13,7 @@
     </resultMap>
 
     <insert id="saveAccount" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstAccount">
-        INSERT  INTO JST_ACCOUNT (
+        insert into jst_account (
             login_name,
             admin_right,
             password,
@@ -31,7 +31,7 @@
     </insert>
 
     <update id="updateAccount" parameterType="com.jst.web.model.database.JstAccount">
-        UPDATE JST_ACCOUNT
+        UPDATE jst_account
         SET login_name = #{account},
             admin_right = #{adminRight},
             password = #{password},
@@ -41,22 +41,22 @@
     </update>
 
     <update id="updatePassword" parameterType="java.util.Map">
-        UPDATE JST_ACCOUNT
+        UPDATE jst_account
         SET password = #{password}
         WHERE id=#{id} and active = true
     </update>
 
     <update id="deactiveAccount" parameterType="java.lang.Long">
-        UPDATE JST_ACCOUNT
+        UPDATE jst_account
         SET active = FALSE
         WHERE emp_id = #{empId}
     </update>
     <select id="getAccountByEmpId" parameterType="java.lang.Long" resultMap="accountMap">
-        SELECT * FROM JST_ACCOUNT WHERE emp_id=#{empId} and active = TRUE ;
+        SELECT * FROM jst_account WHERE emp_id=#{empId} and active = TRUE ;
     </select>
 
     <select id="getAccountByName" parameterType="java.lang.String" resultMap="accountMap">
-        SELECT * FROM JST_ACCOUNT WHERE login_name=#{name} AND active = TRUE;
+        SELECT * FROM jst_account WHERE login_name=#{name} AND active = TRUE;
     </select>
 
 </mapper>

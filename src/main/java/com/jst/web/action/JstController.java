@@ -6,6 +6,7 @@ import com.jst.web.manager.JstAccountManager;
 import com.jst.web.model.database.JstAccount;
 import com.jst.web.model.request.RequestLogin;
 import com.jst.web.model.request.RequestPassword;
+import com.jst.web.util.SignUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -85,6 +89,35 @@ public class JstController {
         }
         return accountManager.modifyPassword(account.getId(), req.getNewPassword());
 
+    }
+
+
+    @GetMapping(value = "/wx/token")
+    public void validWxToken(HttpServletRequest request,HttpServletResponse response) {
+        // 微信加密签名
+        String signature = request.getParameter("signature");
+        // 随机字符串
+        String echostr = request.getParameter("echostr");
+        // 时间戳
+        String timestamp = request.getParameter("timestamp");
+        // 随机数
+        String nonce = request.getParameter("nonce");
+        System.out.println(signature+","+echostr+","+timestamp+","+nonce);
+        String[] str = { signature, timestamp, nonce };
+        Arrays.sort(str); // 字典序排序
+        String bigStr = str[0] + str[1] + str[2];
+        // SHA1加密
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (SignUtil.checkSignature(signature, timestamp, nonce)) {
+            out.print(echostr);
+        }
+        out.close();
+        out = null;
     }
 
 

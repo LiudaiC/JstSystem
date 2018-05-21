@@ -20,7 +20,7 @@
     </resultMap>
 
     <insert id="saveOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstOrder">
-        INSERT  INTO JST_ORDER (
+        INSERT  INTO jst_order (
             product_id,
             employee_id,
             member_id,
@@ -52,7 +52,7 @@
     </insert>
 
     <update id="updateOrder" parameterType="com.jst.web.model.database.JstOrder">
-        UPDATE JST_ORDER
+        UPDATE jst_order
         SET product_id=#{productId},
             employee_id=#{employeeId},
             member_id=#{memberId},
@@ -67,15 +67,15 @@
     </update>
 
     <update id="revokeOrder" parameterType="java.lang.Long">
-        UPDATE JST_ORDER SET status=1 WHERE id=#{orderId}
+        UPDATE jst_order SET status=1 WHERE id=#{orderId}
     </update>
 
     <select id="getOrderById" parameterType="java.lang.Long" resultMap="orderMap">
-        SELECT * FROM JST_ORDER WHERE id=#{id};
+        SELECT * FROM jst_order WHERE id=#{id};
     </select>
 
     <select id="getOrderIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_ORDER WHERE status=0
+        SELECT id FROM jst_order WHERE status=0
         <choose>
             <when test="startTime != null">
                 AND add_time &gt; #{startTime}
@@ -93,26 +93,26 @@
     </select>
 
     <select id="getOrderIdsInMonth" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_ORDER WHERE add_time > #{monthBegin} AND status=0
+        SELECT id FROM jst_order WHERE add_time > #{monthBegin} AND status=0
         <if test="empId &gt; 0">
           AND employee_id = #{empId}
         </if>
     </select>
 
     <select id="getOrderCount" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM JST_ORDER WHERE status=0
+        SELECT COUNT(1) FROM jst_order WHERE status=0
     </select>
 
     <select id="getTotalByMemberId" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM JST_ORDER WHERE member_id=#{memId} AND status=0
+        SELECT COUNT(1) FROM jst_order WHERE member_id=#{memId} AND status=0
     </select>
 
     <select id="getOrderIdsByMem" parameterType="java.lang.Long" resultType="java.lang.Long">
-        SELECT id FROM JST_ORDER WHERE member_id=#{memId} and status=0
+        SELECT id FROM jst_order WHERE member_id=#{memId} and status=0
     </select>
 
     <select id="getOrderCountAndAmount" parameterType="map" resultType="map">
-        SELECT COUNT(1) acount, sum(real_price) amount FROM JST_ORDER
+        SELECT COUNT(1) acount, sum(real_price) amount FROM jst_order
         WHERE add_time &gt; #{startTime}
         AND add_time &lt; #{endTime}
         AND employee_id = #{empId}

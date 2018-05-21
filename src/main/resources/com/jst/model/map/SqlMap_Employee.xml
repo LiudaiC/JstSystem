@@ -16,7 +16,7 @@
     </resultMap>
 
     <insert id="saveEmployee" useGeneratedKeys="true" keyProperty="id" parameterType="com.jst.web.model.database.JstEmployee">
-        INSERT  INTO JST_EMPLOYEE (
+        INSERT  INTO jst_employee (
             name,
             gender,
             age,
@@ -40,7 +40,7 @@
     </insert>
 
     <update id="updateEmployee" parameterType="com.jst.web.model.database.JstEmployee">
-        UPDATE JST_EMPLOYEE
+        UPDATE jst_employee
         SET name=#{name},
             gender=#{gender},
             age=#{age},
@@ -52,30 +52,30 @@
     </update>
 
     <update id="deactiveEmployee" parameterType="com.jst.web.model.database.JstEmployee">
-        UPDATE JST_EMPLOYEE
+        UPDATE jst_employee
         SET update_time=#{updateTime},
         dismission_time=#{dismissionTime}
         WHERE id=#{id}
     </update>
 
     <select id="getEmployeeById" parameterType="java.lang.Long" resultMap="employeeMap">
-        SELECT * FROM JST_EMPLOYEE WHERE id=#{id};
+        SELECT * FROM jst_employee WHERE id=#{id};
     </select>
 
     <select id="queryEmployeeIds" parameterType="java.lang.String" resultType="java.lang.Long">
-        SELECT id FROM JST_EMPLOYEE WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
+        SELECT id FROM jst_employee WHERE phone LIKE '%#{phone}%' OR name LIKE '%#{name}%'
     </select>
 
     <select id="getActiveEmployeeIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_EMPLOYEE WHERE dismission_time IS NULL LIMIT #{start}, #{num}
+        SELECT id FROM jst_employee WHERE dismission_time IS NULL LIMIT #{start}, #{num}
     </select>
 
     <select id="getAllEmployeeIds" parameterType="map" resultType="java.lang.Long">
-        SELECT id FROM JST_EMPLOYEE LIMIT #{start}, #{num}
+        SELECT id FROM jst_employee LIMIT #{start}, #{num}
     </select>
 
     <select id="getEmployeeCount" parameterType="java.sql.Timestamp" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM JST_EMPLOYEE WHERE dismission_time IS NULL
+        SELECT COUNT(1) FROM jst_employee WHERE dismission_time IS NULL
     </select>
 
 </mapper>
